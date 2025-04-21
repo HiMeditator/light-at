@@ -32,3 +32,11 @@ The project has been refactored based on [light-assistant](https://github.com/Hi
 - 增加 vscode 兼容版本（1.90.0 -> 1.80.0）。
 - 修复了一级标题显示的问题。
 - 优化历史聊天记录概览更新逻辑。
+
+## v0.1.4
+
+2025-04-21
+
+- 修复英语环境下弹出信息不完整的问题
+- 修复删除正在回答的信息时的逻辑问题
+- 优化部分输入框颜色

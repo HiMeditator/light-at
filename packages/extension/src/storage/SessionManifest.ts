@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
-import { l10n } from 'vscode';
 import * as fs from 'fs';
+// import { l10n } from 'vscode';
+import { l10n } from '../utils/LangDict';
 import { Configuration } from '../utils/Configuration';
 import { getTimeStr } from '../utils/common';
 import { MainifestItem } from '../types/ChatTypes';

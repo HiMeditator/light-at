@@ -105,6 +105,8 @@ document.addEventListener('click', (e) => {
 .context-search {
   border: none;
   width: 100%;
+  color: var(--vscode-input-foreground, #616161);
+  background-color: var(--vscode-input-background, #ffffff);
 }
 
 .context-search:focus {
@@ -133,9 +135,9 @@ document.addEventListener('click', (e) => {
 }
 
 
-.dropup-option {
+/* .dropup-option {
   box-shadow: 0 0 4px 2px rgba(128, 128, 128, 0.4);
-}
+} */
 
 .selected-context {
   user-select: none;

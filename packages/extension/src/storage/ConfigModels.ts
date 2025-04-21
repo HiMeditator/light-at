@@ -1,7 +1,8 @@
 import * as vscode from 'vscode';
-import { l10n } from 'vscode';
 import * as path from 'path';
 import * as fs from 'fs';
+// import { l10n } from 'vscode';
+import { l10n } from '../utils/LangDict';
 import { nanoid } from '../utils/common';
 import type { Config, Model } from '../types/ConfigTypes';
 import { MessageSender } from '../utils/MessageSender';

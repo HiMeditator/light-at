@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
-import { l10n } from 'vscode';
+// import { l10n } from 'vscode';
+import { l10n } from '../utils/LangDict';
 import { SessionManifest } from '../storage/SessionManifest';
 
 export function loadSession(sessionManifest: SessionManifest) {

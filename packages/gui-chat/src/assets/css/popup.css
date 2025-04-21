@@ -17,7 +17,7 @@
     transform: translate(-50%, -50%);
     border-radius: 10px;
     border: 1px solid rgba(0, 0, 0, 0.4);
-    background-color: var(--vscode-input-background, #ffffff);
+    background-color: var(--vscode-editor-background, #ffffff);
     color: var(--vscode-foreground, #616161);
     text-align: center;
     z-index: 20;

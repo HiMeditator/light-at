@@ -4,6 +4,7 @@ import * as os from 'os';
 import { loadSession } from './chat/loadSession';
 import { RepoContext } from './chat/RepoContext';
 import { RequestModel } from './chat/RequestModel';
+import { init_l10n } from './utils/LangDict';
 import { Configuration } from './utils/Configuration';
 import { RequestHandler } from './utils/RequestHandler';
 import { ConfigModels } from './storage/ConfigModels';
@@ -16,6 +17,7 @@ let requestModel: RequestModel;
 let sessionManifest: SessionManifest;
 
 export function activate(context: vscode.ExtensionContext) {
+    init_l10n(context.extensionUri);
     const storageDir = vscode.Uri.joinPath(vscode.Uri.file(os.homedir()),'/.light-at');
     const configUri = vscode.Uri.joinPath(storageDir, 'config.json');
     const sesseionDir = vscode.Uri.joinPath(storageDir, 'chat');

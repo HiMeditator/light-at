@@ -171,7 +171,8 @@ function cancel() {
 
 form label {
   display: inline-block;
-  width: min(30%, 60px);
+  width: min(30%, 65px);
+  margin-right: 5px;
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: center;
@@ -181,6 +182,16 @@ form input,
 form textarea {
   display: inline-block;
   width: calc(90% - min(30%, 60px));
+  color: var(--vscode-input-foreground, #616161);
+  border-radius: 2px;
+  border: 1px solid rgba(128, 128, 128, 0.4);
+  background-color: var(--vscode-input-background, #ffffff);
+}
+
+form input:focus,
+form textarea:focus {
+  outline: none;
+  border: 1px solid var(--vscode-button-hoverBackground, #5a4579);
 }
 
 form textarea {

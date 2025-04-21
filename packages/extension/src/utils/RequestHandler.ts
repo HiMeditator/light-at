@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
-import { l10n } from 'vscode';
-
+// import { l10n } from 'vscode';
+import { l10n } from '../utils/LangDict';
 import { MessageSender } from '../utils/MessageSender';
 import { Configuration } from '../utils/Configuration';
 import { ConfigModels } from '../storage/ConfigModels';

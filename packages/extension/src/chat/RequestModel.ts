@@ -1,8 +1,9 @@
 import * as vscode from 'vscode';
-import { l10n } from 'vscode';
 import * as fs from 'fs';
 import ollama from 'ollama';
 import OpenAI from 'openai';
+// import { l10n } from 'vscode';
+import { l10n } from '../utils/LangDict';
 import { nanoid } from '../utils/common';
 import { Model } from '../types/ConfigTypes';
 import { ChatMessage, SessionItem } from '../types/ChatTypes';
@@ -111,13 +112,13 @@ export class RequestModel {
             return;
         }
         if(this.isRequesting) { 
-            vscode.window.showErrorMessage(l10n.t('ts.fetchingModelInfo'));
+            vscode.window.showInformationMessage(l10n.t('ts.fetchingModelInfo'));
             return;
         }
         this.stopSign = false;
         this.model = this.configModels.getModel();
         if(!this.model){
-            vscode.window.showErrorMessage(l10n.t('ts.modelNotSelected'));
+            vscode.window.showInformationMessage(l10n.t('ts.modelNotSelected'));
             return;
         }
         this.name = this.model.title ? this.model.title : this.model.model;
@@ -263,8 +264,9 @@ export class RequestModel {
     }
         
     public deleteDialog(requestID: string) {
-        if(requestID === this.messageID) {
-            this.stopSign = true;
+        if(requestID === this.messageID && this.isRequesting) {
+            vscode.window.showInformationMessage(l10n.t('ts.fetchingModelInfo'));
+            return;
         }
         for(let i= 0; i < this.chatSession.length; i++){
             if(this.chatSession[i].id === requestID){
