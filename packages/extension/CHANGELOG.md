@@ -40,3 +40,11 @@ The project has been refactored based on [light-assistant](https://github.com/Hi
 - 修复英语环境下弹出信息不完整的问题
 - 修复删除正在回答的信息时的逻辑问题
 - 优化部分输入框颜色
+
+## v0.1.5
+
+2025-05-05
+
+- 非连续对话改为也引入系统提示词
+- 对于用户输入内容不再进行渲染
+- 删除图片资源，减少插件大小

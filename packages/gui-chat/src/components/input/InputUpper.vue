@@ -17,10 +17,10 @@
             <sub>{{ $t('input.noContextInfo') }}</sub>
           </li>
         </ul>
-        <div class="search-box">
+        <div class="dropup-input">
           <input
             type="text"
-            class="context-search"
+            class="dropup-input-content"
             v-model="search"
             :placeholder="$t('input.searchConext')"
           >
@@ -92,24 +92,24 @@ document.addEventListener('click', (e) => {
   flex-wrap: wrap;
 }
 
-.search-box {
+.dropup-input {
   padding: 6px 12px;
   border-radius: 5px;
   border: 1px solid rgba(128, 128, 128, 0.4);
 }
 
-.search-box:focus-within {
+.dropup-input:focus-within {
   border: 1px solid var(--vscode-button-hoverBackground, #5a4579);
 }
 
-.context-search {
+.dropup-input-content {
   border: none;
   width: 100%;
   color: var(--vscode-input-foreground, #616161);
   background-color: var(--vscode-input-background, #ffffff);
 }
 
-.context-search:focus {
+.dropup-input-content:focus {
   outline: none;
 }
 

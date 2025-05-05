@@ -1,0 +1,10 @@
+## 未来计划
+
+- [ ] 添加指令系统，可以在输入框输入 `/` 或 `@` 弹出指令菜单，其中提供指令
+  - [ ] 指令系统设计：`/` 快速执行指令，`@` 引用内容指令
+  - [ ] 修改 `textarea` 为 div 用 `contenteditable` 启动编辑，提供指令渲染
+- [ ] 多模态输入
+  - [ ] 提供图片输入功能
+  - [ ] 提供语音输入功能？
+
+![](https://github.com/HiMeditator/light-at/raw/HEAD/assets/media/render.gif)

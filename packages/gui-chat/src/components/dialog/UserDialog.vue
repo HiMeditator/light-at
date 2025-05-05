@@ -7,7 +7,7 @@
       <div class="user-name">User</div>
     </div>
     <div class="user-content">
-      <MarkdownContent :content="dialog.content" />
+      <div class="dialog-content">{{ dialog.content }}</div>
       <div class="dialog-context-file" v-if="dialog.context.length">
         <span
           v-for="path in dialog.context"
@@ -77,6 +77,10 @@ defineProps<{ dialog: UserDialogItem }>();
   margin: 5px;
   overflow-x: auto;
   scrollbar-width: thin;
+}
+
+.dialog-content {
+  white-space: pre-wrap;
 }
 
 .dialog-context-file{

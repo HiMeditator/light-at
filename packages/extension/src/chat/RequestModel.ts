@@ -141,7 +141,15 @@ export class RequestModel {
         let responseContent = '';
         let reasoning = '';
         const continuousChat = Configuration.get<boolean>('continuousChat');
-        const messages = continuousChat ? this.chatMessages : [this.chatMessages[this.chatMessages.length - 1]];
+        // const messages = continuousChat ? this.chatMessages : [this.chatMessages[this.chatMessages.length - 1]];
+        let messages = this.chatMessages;
+        if(!continuousChat) {
+            messages = [];
+            if(this.chatMessages[0].role === 'system'){
+                messages.push(this.chatMessages[0]);
+            }
+            messages.push(this.chatMessages[this.chatMessages.length - 1]);
+        }
         MessageSender.responseNew(this.messageID, 'ollama', this.name);
         try{
             const response = await ollama.chat({
@@ -193,7 +201,15 @@ export class RequestModel {
         let prompt_tokens = 0;
         let completion_tokens = 0;
         const continuousChat = Configuration.get<boolean>('continuousChat');
-        const messages = continuousChat ? this.chatMessages : [this.chatMessages[this.chatMessages.length - 1]];
+        // const messages = continuousChat ? this.chatMessages : [this.chatMessages[this.chatMessages.length - 1]];
+        let messages = this.chatMessages;
+        if(!continuousChat) {
+            messages = [];
+            if(this.chatMessages[0].role === 'system'){
+                messages.push(this.chatMessages[0]);
+            }
+            messages.push(this.chatMessages[this.chatMessages.length - 1]);
+        }
         MessageSender.responseNew(this.messageID, 'openai', this.name);
         try {
             const openai = new OpenAI({

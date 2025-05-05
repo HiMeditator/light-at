@@ -47,19 +47,19 @@
 
 ### ♾️ Mathematical Formula Rendering
 
-![](assets/media/render.gif)
+![render.gif](https://github.com/HiMeditator/light-at/raw/HEAD/assets/media/render.gif)
 
 ### 📝 Model Configuration
 
-![](assets/media/model.gif)
+![model.gif](https://github.com/HiMeditator/light-at/raw/HEAD/assets/media/model.gif)
 
 ### 📋 Chat Context Selection
 
-![](assets/media/context.gif)
+![context.gif](https://github.com/HiMeditator/light-at/raw/HEAD/assets/media/context.gif)
 
 ### 💬 Chat History Management
 
-![](assets/media/history.gif)
+![history.gif](https://github.com/HiMeditator/light-at/raw/HEAD/assets/media/history.gif)
 
 ## 📦 Project Repository
 

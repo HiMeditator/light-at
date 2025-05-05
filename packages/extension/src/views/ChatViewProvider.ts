@@ -6,7 +6,6 @@ import { RequestHandler } from '../utils/RequestHandler';
 
 export class ChatViewProvider implements vscode.WebviewViewProvider {
     public static readonly viewType = 'light-at.chat';
-    private _view?: vscode.WebviewView;
     constructor(
         private readonly _extensionUri: vscode.Uri
     ) { }
@@ -16,7 +15,6 @@ export class ChatViewProvider implements vscode.WebviewViewProvider {
         _context: vscode.WebviewViewResolveContext,
         _token: vscode.CancellationToken,
     ) {
-        this._view = webviewView;
         webviewView.webview.options = {
             enableScripts: true,
             localResourceRoots: [this._extensionUri]
@@ -24,7 +22,6 @@ export class ChatViewProvider implements vscode.WebviewViewProvider {
         webviewView.webview.html = this._getHtmlForWebview(webviewView.webview);
 
         MessageSender.view = webviewView;
-        RequestHandler.view = webviewView;
 
         webviewView.webview.onDidReceiveMessage(
             RequestHandler.handleRequest

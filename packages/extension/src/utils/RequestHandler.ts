@@ -9,7 +9,6 @@ import { RequestModel } from '../chat/RequestModel';
 import { SessionManifest } from '../storage/SessionManifest';
 
 export class RequestHandler {
-    public static view: vscode.WebviewView | undefined;
     public static configModels: ConfigModels | undefined;
     public static repoContext: RepoContext | undefined;
     public static requestModel: RequestModel | undefined;
