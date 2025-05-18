@@ -48,3 +48,10 @@ The project has been refactored based on [light-assistant](https://github.com/Hi
 - 非连续对话改为也引入系统提示词
 - 对于用户输入内容不再进行渲染
 - 删除图片资源，减少插件大小
+
+## v0.1.6
+
+2025-05-??
+
+- 不再显示输入内容前后的空白字符
+- 修复保存含推理内容的聊天记录时，添加大量“null”字符串的问题

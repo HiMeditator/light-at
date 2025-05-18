@@ -1,10 +1,10 @@
 {
   "name": "light-at",
-  "displayName": "Light At",
+  "displayName": "Light At (Chat with LLMs)",
   "publisher": "himeditator",
   "icon": "assets/icons/light-at.png",
   "description": "Light At is an open-source chat assistant for VS Code, emphasizing the experience of chatting with LLMs within the IDE.",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "repository": {
     "type": "git",
     "url": "https://github.com/HiMeditator/light-at"

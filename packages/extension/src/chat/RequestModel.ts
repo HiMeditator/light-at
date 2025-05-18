@@ -247,8 +247,8 @@ export class RequestModel {
                         isReasoning = false;
                     }
                     content += delta['content'];
+                    responseContent += delta['content'];
                 }
-                responseContent += delta['content'];
                 MessageSender.responseStream(content, this.messageID);
                 // console.log(chunk['choices'][0]['delta'], content);
                 if(this.stopSign){

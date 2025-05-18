@@ -7,7 +7,7 @@
       <div class="user-name">User</div>
     </div>
     <div class="user-content">
-      <div class="dialog-content">{{ dialog.content }}</div>
+      <div class="dialog-content">{{ dialog.content.trim() }}</div>
       <div class="dialog-context-file" v-if="dialog.context.length">
         <span
           v-for="path in dialog.context"
