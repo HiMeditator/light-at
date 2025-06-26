@@ -8,13 +8,13 @@
       <div class="dialog-control">
         <FontAwesomeIcon
           v-if="hasReasoning"
-          @click="showReasoning = !showReasoning"
+          @click="clickChevron"
           :icon="showReasoning ? faChevronUp : faChevronDown"
           :title="$t('dialog.reasoning')"
         />
         <FontAwesomeIcon
           @click="copyDialog"
-          :icon="faClipboard"
+          :icon="isCopied ? faCheck : faClipboard"
           :title="$t('dialog.copy')"
         />
         <FontAwesomeIcon
@@ -26,8 +26,20 @@
       </div>
     </div>
     <div class="model-content">
-      <div class="reasoning-content" v-show="showReasoning">
-        <MarkdownContent :content="reasoning" />
+      <div
+        :class="[
+          'reasoning-content', 
+          showReasoning ? '' : 'reasoning-content-collpase'
+        ]"
+        @dblclick="clickChevron"
+        v-if="hasReasoning"
+      >
+        <template v-if="showReasoning">
+          <MarkdownContent :content="reasoning" />
+        </template>
+        <template v-else>
+          {{ reasoning }}
+        </template>
       </div>
       <MarkdownContent :content="content" />
       <div class="div-tokens" v-if=" (dialog.prompt_tokens && dialog.completion_tokens)">
@@ -49,32 +61,40 @@ import type { ModelDialogItem } from '@/types'
 import { useSenderStore } from '@/stores/sender'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faChevronUp, faChevronDown, faHexagonNodes, faCircleNodes, faLightbulb } from '@fortawesome/free-solid-svg-icons'
-import { faClipboard, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faClipboard, faXmark, faCheck } from '@fortawesome/free-solid-svg-icons'
 const props = defineProps<{ dialog: ModelDialogItem }>()
+const isCopied = ref(false);
 
 const hasReasoning = ref(false)
 const showReasoning = ref(true)
+const clickReasoning = ref(false)
 const reasoning = ref('')
 let content = ref('')
+
+function clickChevron() {
+  showReasoning.value = !showReasoning.value
+  clickReasoning.value = true
+}
 
 function updateContent() {
   if(props.dialog.content.startsWith('<think>')){
     hasReasoning.value = true
     const pos = props.dialog.content.indexOf('</think>')
     if(pos < 0) {
-      showReasoning.value = true
+      if(!clickReasoning.value){
+        showReasoning.value = true
+      }
       reasoning.value = props.dialog.content.substring(7)
-      content.value = ''
     }
     else{
-      if(props.dialog.type) showReasoning.value = false
+      if(props.dialog.type && !clickReasoning.value) {
+        showReasoning.value = false
+      }
       reasoning.value = props.dialog.content.substring(7, pos)
       content.value = props.dialog.content.substring(pos + 8)
     }
   }
   else {
-    showReasoning.value = false
-    reasoning.value = ''
     content.value = props.dialog.content
   }
 }
@@ -97,6 +117,10 @@ function getHeadIcon() {
 
 function copyDialog() {
   navigator.clipboard.writeText(props.dialog.content)
+  isCopied.value = true;
+  setTimeout(() => {
+    isCopied.value = false;
+  }, 500);
 }
 
 function deleteDialog() {
@@ -182,6 +206,16 @@ function deleteDialog() {
 
 .reasoning-content:hover {
   background-color: rgba(128, 128, 128, 0.1);
+}
+
+.reasoning-content-collpase {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  display: block;
+  min-height: 1.6em;
+  max-width: 100%;
 }
 
 .div-tokens span {

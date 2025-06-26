@@ -13,6 +13,8 @@
 
 ## 📥 Download
 
+<a href="https://github.com/HiMeditator/light-at/blob/main/packages/extension/CHANGELOG.md">Changelog</a>
+
 - [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=himeditator.light-at)
 
 - [Github Release](https://github.com/HiMeditator/light-at/releases)

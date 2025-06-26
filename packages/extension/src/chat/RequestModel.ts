@@ -91,7 +91,7 @@ export class RequestModel {
                         item.id,
                         item.type as string,
                         item.name as string,
-                        item.content
+                        (item.reasoning ?? '') + item.content
                     );
                 }
             }     

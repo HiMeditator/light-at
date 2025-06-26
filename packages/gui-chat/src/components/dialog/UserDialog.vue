@@ -5,6 +5,13 @@
         <FontAwesomeIcon :icon="faUser" />
       </div>
       <div class="user-name">User</div>
+      <div class="user-control">
+        <FontAwesomeIcon
+          @click="copyDialog"
+          :icon="isCopied ? faCheck : faClipboard"
+          :title="$t('dialog.copy')"
+        />
+      </div>
     </div>
     <div class="user-content">
       <div class="dialog-content">{{ dialog.content.trim() }}</div>
@@ -26,14 +33,22 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue';
+import { defineProps, ref } from 'vue';
 import type { UserDialogItem } from '@/types';
-import MarkdownContent from './MarkdownContent.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faUser } from '@fortawesome/free-solid-svg-icons'
+import { faUser, faClipboard, faCheck } from '@fortawesome/free-solid-svg-icons'
 import { useSenderStore } from '@/stores/sender';
 const senderStore = useSenderStore()
-defineProps<{ dialog: UserDialogItem }>();
+const props = defineProps<{ dialog: UserDialogItem }>();
+const isCopied = ref(false);
+
+function copyDialog() {
+  navigator.clipboard.writeText(props.dialog.content)
+  isCopied.value = true;
+  setTimeout(() => {
+    isCopied.value = false;
+  }, 500);
+}
 </script>
 
 <style scoped>
@@ -70,6 +85,28 @@ defineProps<{ dialog: UserDialogItem }>();
 
 .user-name {
   display: inline-block;
+}
+
+.user-control {
+  display: none;
+  position: absolute;
+  padding: 5px 10px;
+  border-radius: 5px;
+  right: -5px;
+  top: 0;
+}
+
+.user-dialog:hover .user-control {
+  display: block;
+}
+
+.user-control svg{
+  margin: auto 5px;
+  cursor: pointer;
+}
+
+.user-control svg:active{
+  transform: scale(1.25);
 }
 
 .user-content {
