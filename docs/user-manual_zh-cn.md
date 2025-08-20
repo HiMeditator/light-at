@@ -24,6 +24,7 @@
       "model": "model name",
       "title": "display name",
       "baseURL": "https://model_base_url",
+      "host": "Ollama serve host",
       "apiKey": "sk-* | env@API_KEY"
     }
   ]
@@ -34,6 +35,7 @@
 - `model`：必须。模型名称，例如：`llama3.3-70b-instruct`。
 - `title`：可选。模型显示名称，如果不设置，默认为 `model` 的值。
 - `baseURL`：若 `type` 为 `openai` 则必须。API 请求的基础 URL，取决于您的模型服务商。
+- `host`: 可选。Ollama 服务器的主机地址，或者 localhost 的端口号。
 - `apiKey`：若 `type` 为 `openai` 则必须。API 密钥，从您的模型服务商获取。
 
 > **注意:** 对于 `apiKey` 字段，您可以使用环境变量。设置格式为：`env@API_KEY_NAME` 其中 `API_KEY_NAME` 为您实际的 API 密钥在环境变量中对应的名称。刚设置的环境变量可能不生效，一般需要重启电脑后生效。
@@ -55,9 +57,10 @@
       "title": "qwen2.5-7b"
     },
     {
-      "id": "deepseek-r1-no.002"
+      "id": "deepseek-r1-no.002",
       "type": "ollama",
-      "model": "deepseek-r1"
+      "model": "deepseek-r1",
+      "host": "http://localhost:12345"
     },
     {
       "id": "WyCSP4M3CZluzoNgNCm2k",

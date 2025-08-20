@@ -26,6 +26,7 @@
       "model": "model name",
       "title": "display name",
       "baseURL": "https://model_base_url",
+      "host": "Ollama serve host",
       "apiKey": "sk-********************************"
     }
   ]
@@ -36,6 +37,7 @@
 - `model`：必須。モデル名、例：`llama3.3-70b-instruct`。
 - `title`：オプション。モデルの表示名で、設定しない場合は `model` の値が使用されます。
 - `baseURL`：`type` が `openai` の場合必須。API リクエストのベース URL で、モデル提供者によります。
+- `host`：オプション。Ollama サーバーのホストアドレス、またはlocalhost のポート番号。
 - `apiKey`：`type` が `openai` の場合必須。API キーはモデル提供者から取得してください。
 
 > **注意:** `apiKey` フィールドには、環境変数を使用できます。設定形式は次のとおりです：`env@API_KEY_NAME` ここで、`API_KEY_NAME` は環境変数に保存されている実際の API キーの名前です。今設定した環境変数はすぐに有効にならない場合があります。一般的に、コンピュータを再起動する必要があります。

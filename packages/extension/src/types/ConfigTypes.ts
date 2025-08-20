@@ -4,6 +4,7 @@ export interface Model {
     model: string;
     title?: string;
     baseURL?: string;
+    host?: string;
     apiKey?: string;
     system?: string;
 }

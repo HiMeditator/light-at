@@ -16,6 +16,7 @@ export default {
         openaiNote: "The model you provided needs to be compatible with the {a}OpenAI API{_a}.",
         ollamaNote: "Please confirm that you have installed {a}Ollama{_a} locally and configured the corresponding model.",
         deleteNote: "Are you sure you want to delete this model?",
+        hostNote: "Please enter the address of the Ollama service, which can be a URL with a port number or a localhost port number.",
         yes: "Yes",
         no: "No",
         submit: "Submit",

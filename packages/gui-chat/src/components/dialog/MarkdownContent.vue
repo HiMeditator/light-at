@@ -4,7 +4,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, watch, onMounted } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { renderMarkdownContent } from "@/utils/renderMarkdownContent";
 const props = defineProps<{ content: string }>()
 let renderNode = ref<HTMLElement>()

@@ -33,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref } from 'vue';
+import { ref } from 'vue';
 import type { UserDialogItem } from '@/types';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faUser, faClipboard, faCheck } from '@fortawesome/free-solid-svg-icons'

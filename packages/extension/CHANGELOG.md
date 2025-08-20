@@ -63,3 +63,10 @@ The project has been refactored based on [light-assistant](https://github.com/Hi
 - 修复载入历史记录时，没有载入推理内容的问题
 - 优化推理内容展示逻辑，双击可展开推理内容
 - 用户聊天提问增加复制功能
+
+## v0.1.7
+
+2025-08-20
+
+- 添加 Ollma 模型服务 host 配置项
+- 推理内容为空时不显示推理内容框

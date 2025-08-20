@@ -16,6 +16,7 @@ export default {
         openaiNote: "您提供的模型需要兼容{a}OpenAI库{_a}的API。",
         ollamaNote: "请确保您已经在本地安装了{a}Ollama{_a}，且配置了相应的模型。",
         deleteNote: "你确定要删除该模型吗？",
+        hostNote: "请输入 Ollama 服务的地址，可以是带端口号的 URL 或者 localhost 的端口号。",
         yes: "是",
         no: "否",
         submit: "提交",

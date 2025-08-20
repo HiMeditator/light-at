@@ -16,7 +16,6 @@
 
 <script setup lang="ts">
 import type { Model } from '@/types'
-import { defineProps } from 'vue'
 import { useSenderStore } from '@/stores/sender'
 
 const props = defineProps<{

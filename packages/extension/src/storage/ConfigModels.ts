@@ -13,9 +13,9 @@ export class ConfigModels {
         public configUri: vscode.Uri,
         public context: vscode.ExtensionContext
     ) {
-        const folerPath = path.dirname(this.configUri.fsPath);
-        if(!fs.existsSync(folerPath)){
-            fs.mkdirSync(folerPath, {recursive: true});
+        const folderPath = path.dirname(this.configUri.fsPath);
+        if(!fs.existsSync(folderPath)){
+            fs.mkdirSync(folderPath, {recursive: true});
         }
         if(!fs.existsSync(this.configUri.fsPath)){
             fs.writeFileSync(this.configUri.fsPath, `{\n  "models": []\n}`);

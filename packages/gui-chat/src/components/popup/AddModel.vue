@@ -41,6 +41,14 @@
           v-model="modelConfig.baseURL"
         >
       </div>
+      <div class="form-entry" v-if="modelConfig.type === 'ollama'">
+        <label for="i-host">host</label>
+        <input type="text" id="i-host" name="host"
+          v-model="modelConfig.host"
+          pattern="^((http:\/\/)?[\w\/.\-]+:)?[\d]+$"
+          :title="$t('popup.hostNote')"
+        >
+      </div>
       <div class="form-entry" v-if="modelConfig.type === 'openai'">
         <label for="i-api_key">*apiKey</label>
         <input :type="apiKeyType" id="i-api_key" name="api_key" required
@@ -53,14 +61,14 @@
           v-model="modelConfig.system"
         ></textarea>
       </div>
-      <button @click.prevent="submit">{{ $t('popup.submit') }}</button>
+      <button @click="submit">{{ $t('popup.submit') }}</button>
       <button @click.prevent="cancel">{{ $t('popup.cancel') }}</button>
     </form>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, toRaw, defineProps, computed } from 'vue'
+import { ref, toRaw, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import type { ModelConfig } from '@/types'
 import { useSenderStore } from '@/stores/sender'
@@ -76,6 +84,7 @@ const modelConfig = ref<ModelConfig>({
   model: '',
   title: '',
   baseURL: '',
+  host: '',
   apiKey: '',
   system: ''
 })
@@ -106,12 +115,21 @@ let apiKeyType = computed( () => {
   }
 })
 
-function submit() {
+function submit(e: Event) {
   if(!modelForm.value?.checkValidity()) return
+  e.preventDefault()
   let rawModelConfig: ModelConfig = toRaw(modelConfig.value)
   if(rawModelConfig.type === 'ollama'){
     delete rawModelConfig.baseURL
     delete rawModelConfig.apiKey
+    if(rawModelConfig.host?.trim() === ''){
+      delete rawModelConfig.host
+    }
+    else {
+      if(rawModelConfig.host && rawModelConfig.host.match(/^[\d]+$/)) {
+        rawModelConfig.host = `http://localhost:${rawModelConfig.host}`
+      }
+    }
   }
   if(rawModelConfig.title?.trim() === ''){
     delete rawModelConfig.title

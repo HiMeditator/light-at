@@ -55,7 +55,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, watch } from 'vue'
+import { ref, watch } from 'vue'
 import MarkdownContent from './MarkdownContent.vue'
 import type { ModelDialogItem } from '@/types'
 import { useSenderStore } from '@/stores/sender'
@@ -92,6 +92,9 @@ function updateContent() {
       }
       reasoning.value = props.dialog.content.substring(7, pos)
       content.value = props.dialog.content.substring(pos + 8)
+    }
+    if(!reasoning.value.trim()) {
+      hasReasoning.value = false
     }
   }
   else {

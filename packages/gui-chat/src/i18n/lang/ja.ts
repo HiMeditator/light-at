@@ -16,6 +16,7 @@ export default {
         openaiNote: "提供するモデルは、{a}OpenAIライブラリ{_a}のAPI と互換性がある必要があります。",
         ollamaNote: "すでにローカルに {a}Ollama{_a} をインストールし、対応するモデルを設定していることを確認してください。",
         deleteNote: "このモデルを削除してもよろしいですか。",
+        hostNote: "Ollama サービスのアドレスを入力してください。ポート番号付きの URL、または localhost のポート番号を指定できます。",
         yes: "はい",
         no: "いいえ",
         submit: "送信",

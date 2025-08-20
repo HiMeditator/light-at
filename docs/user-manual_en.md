@@ -24,6 +24,7 @@ The configuration format is as follows:
       "model": "model name",
       "title": "display name",
       "baseURL": "https://model_base_url",
+      "host": "Ollama serve host",
       "apiKey": "sk-********************************"
     }
   ]
@@ -34,6 +35,7 @@ The configuration format is as follows:
 - `model`: Required. The name of the model, e.g., `llama3.3-70b-instruct`.
 - `title`: Optional. The display name of the model. If not set, it defaults to the value of `model`.
 - `baseURL`: Required if `type` is `openai`. The base URL for API requests, which depends on your model provider.
+- `host`: Optional. The host address of the Ollama server, or the localhost port number.
 - `apiKey`: Required if `type` is `openai`. The API key, obtained from your model provider.
 
 > **Note:** For the `apiKey` field, you can use environment variables. The format is: `env@API_KEY_NAME`, where `API_KEY_NAME` is the name of your actual API key as stored in the environment variables. The environment variable you just set may not take effect immediately. Generally, you need to restart your computer for it to work.

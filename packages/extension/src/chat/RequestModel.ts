@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
-import ollama from 'ollama';
+import { Ollama } from 'ollama';
 import OpenAI from 'openai';
 // import { l10n } from 'vscode';
 import { l10n } from '../utils/LangDict';
@@ -138,6 +138,15 @@ export class RequestModel {
     }
     
     public async requestOllama(){
+        let ollama;
+        if(this.model?.host){
+            ollama = new Ollama({
+                host: this.model.host
+            });
+        }
+        else {
+            ollama = new Ollama();
+        }
         let responseContent = '';
         let reasoning = '';
         const continuousChat = Configuration.get<boolean>('continuousChat');
