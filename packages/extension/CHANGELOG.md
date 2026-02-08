@@ -70,3 +70,10 @@ The project has been refactored based on [light-assistant](https://github.com/Hi
 
 - 添加 Ollma 模型服务 host 配置项
 - 推理内容为空时不显示推理内容框
+
+## v0.2.0
+
+2026-02-08
+
+- 添加默认系统提示词
+- 优化上下文信息提示词

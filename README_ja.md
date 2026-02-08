@@ -3,6 +3,12 @@
     <h1 align="center">light-at</h1>
     <p>ライトアットは VS Code 向けのスマートアシスタントプラグインです。コード能力よりも、IDE 内での大規模モデルチャット体験に重点を置いています。</p>
     <p>
+      <a href="https://github.com/HiMeditator/light-at/releases"><img src="https://img.shields.io/badge/release-0.2.0-blue"></a>
+      <a href="https://github.com/HiMeditator/light-at/issues"><img src="https://img.shields.io/github/issues/HiMeditator/light-at?color=orange"></a>
+      <img src="https://img.shields.io/github/languages/top/HiMeditator/light-at?color=royalblue">
+      <img src="https://img.shields.io/github/repo-size/HiMeditator/light-at?color=green">
+    </p>
+    <p>
         | <a href="https://github.com/HiMeditator/light-at/blob/main/README.md">简体中文</a>
         | <a href="https://github.com/HiMeditator/light-at/blob/main/README_en.md">English</a>
         | <b>日本語</b> |
@@ -27,6 +33,7 @@
 
 ## ✨ 特徴
 
+- **複数モデルのサポート:** OpenAI互換APIおよびローカルのOllamaモデルが利用可能
 - **数学公式レンダリング:** 多くのスマートアシスタントが欠いている数学公式のレンダリング機能を補完します。
 - **便利なモデル設定:** テーブルや設定ファイルの編集を通じてモデルを管理できます。
 - **チャットコンテキストの選択:** IDE で開いたテキストファイルを選んでコンテキストとして使用できます。

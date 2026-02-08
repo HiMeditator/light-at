@@ -3,6 +3,12 @@
     <h1 align="center">light-at</h1>
     <p>轻亮是一个面向 VS Code 的智能助手插件。比起代码能力，轻亮更注重 IDE 内的大模型聊天体验。</p>
     <p>
+      <a href="https://github.com/HiMeditator/light-at/releases"><img src="https://img.shields.io/badge/release-0.2.0-blue"></a>
+      <a href="https://github.com/HiMeditator/light-at/issues"><img src="https://img.shields.io/github/issues/HiMeditator/light-at?color=orange"></a>
+      <img src="https://img.shields.io/github/languages/top/HiMeditator/light-at?color=royalblue">
+      <img src="https://img.shields.io/github/repo-size/HiMeditator/light-at?color=green">
+    </p>
+    <p>
         | <b>简体中文</b>
         | <a href="https://github.com/HiMeditator/light-at/blob/main/README_en.md">English</a>
         | <a href="https://github.com/HiMeditator/light-at/blob/main/README_ja.md">日本語</a> |
@@ -27,6 +33,7 @@
 
 ## ✨ 特性
 
+- **多种模型支持**：可使用 OpenAI 兼容 API 和本地 Ollama 模型
 - **数学公式渲染:** 弥补了大多数智能助手没有数学公式渲染的缺点。
 
 - **方便的模型配置:** 通过表格或修改配置文件管理模型。

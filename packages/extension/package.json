@@ -4,7 +4,7 @@
   "publisher": "himeditator",
   "icon": "assets/icons/light-at.png",
   "description": "Light At is an open-source chat assistant for VS Code, emphasizing the experience of chatting with LLMs within the IDE.",
-  "version": "0.1.8",
+  "version": "0.2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/HiMeditator/light-at"
@@ -111,6 +111,12 @@
           "type": "boolean",
           "default": false,
           "markdownDescription": "%desc.loadLastChatSession%",
+          "order": 0
+        },
+        "lightAt.useDefaultSystemPrompt": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "%desc.useDefaultSystemPrompt%",
           "order": 0
         },
         "lightAt.continuousChat": {

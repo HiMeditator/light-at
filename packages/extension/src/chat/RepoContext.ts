@@ -48,13 +48,13 @@ export class RepoContext {
         let contextPrompt = '';
         for(const context of contextList){
             if(context === '[selected]'){
-                contextPrompt += `\n\nSelected Content:\n\`\`\`\n${this.selectedContent}\n\`\`\``;
+                contextPrompt += `\n\n[SELECTION_START]\n${this.selectedContent}\n[SELECTION_END]`;
             }
             else if(this.includeTextEditors[context]){
                 const fileName = path.basename(context);
                 const extName = path.extname(context);
                 const fileContent = this.includeTextEditors[context].document.getText();
-                contextPrompt += `\n\n${fileName}\n\`\`\`${extName}\n${fileContent}\n\`\`\``;
+                contextPrompt += `\n\n[FILE_START ${fileName}.${extName}]\n${fileContent}\n[FILE_END]`;
             }
         }
         return contextPrompt;

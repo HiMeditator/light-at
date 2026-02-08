@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
+import * as os from 'os';
 import { Ollama } from 'ollama';
 import OpenAI from 'openai';
 // import { l10n } from 'vscode';
@@ -11,6 +12,26 @@ import { RepoContext } from './RepoContext';
 import { Configuration } from '../utils/Configuration';
 import { MessageSender } from '../utils/MessageSender';
 import { ConfigModels } from '../storage/ConfigModels';
+
+const DEFAULT_SYSTEM_PROMPT = `
+You are Light At, an intelligent chat assistant developed by HiMeditator, integrated within the IDE.  
+
+You are required to answer any questions posed by the user. The following information may assist you in providing better responses:  
+
+- Current IDE: ${vscode.env.appName}  
+- User's operating system type: ${os.type()}  
+- User's operating system version: ${os.release()}  
+- System architecture: ${os.arch()}  
+- User's IDE interface language code: ${vscode.env.language}  
+- Current date and time: ${new Date().toLocaleString()}  
+
+The language you use should prioritize the language the user communicates with you in, with the IDE's interface language as a fallback.  
+
+Note that after the user's request, they may attach selected text snippets or complete file content from within the IDE as contextual information, formatted as follows:  
+
+- For selected text snippets, it begins with [SELECTION_START] and ends with [SELECTION_END].  
+- For complete files, it begins with [FILE_START <filename>], ending with [FILE_END].  
+`.trim();
 
 export class RequestModel {
     chatMessages: ChatMessage[] = [];
@@ -124,8 +145,13 @@ export class RequestModel {
         this.name = this.model.title ? this.model.title : this.model.model;
         this.messageID = nanoid();
         MessageSender.requestLoad(this.messageID, request, contextStr);
-        if(this.chatMessages.length === 0 && this.model.system){
-            this.pushSystemMessage(this.model.system);
+        if(this.chatMessages.length === 0){
+            if(this.model.system) {
+                this.pushSystemMessage(this.model.system);
+            }
+            else if(Configuration.get<boolean>('useDefaultSystemPrompt')) {
+                this.pushSystemMessage(DEFAULT_SYSTEM_PROMPT);
+            }
         }
         this.pushUserMessage(request, contextStr);
         this.isRequesting = true;

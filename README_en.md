@@ -3,6 +3,12 @@
     <h1 align="center">light-at</h1>
     <p>Light-at is an intelligent assistant plugin for VS Code that focuses more on the large model chat experience within the IDE rather than coding capabilities.</p>
     <p>
+      <a href="https://github.com/HiMeditator/light-at/releases"><img src="https://img.shields.io/badge/release-0.2.0-blue"></a>
+      <a href="https://github.com/HiMeditator/light-at/issues"><img src="https://img.shields.io/github/issues/HiMeditator/light-at?color=orange"></a>
+      <img src="https://img.shields.io/github/languages/top/HiMeditator/light-at?color=royalblue">
+      <img src="https://img.shields.io/github/repo-size/HiMeditator/light-at?color=green">
+    </p>
+    <p>
         | <a href="https://github.com/HiMeditator/light-at/blob/main/README.md">简体中文</a>
         | <b>English</b>
         | <a href="https://github.com/HiMeditator/light-at/blob/main/README_ja.md">日本語</a> |
@@ -27,6 +33,7 @@
 
 ## ✨ Features
 
+- **Multiple Model Support:** Compatible with OpenAI API and local Ollama models
 - **Math Formula Rendering:** Addresses the lack of math formula rendering in most intelligent assistants.
 - **Convenient Model Configuration:** Manage models through a table or by modifying configuration files.
 - **Select Chat Context:** Choose text files opened in the IDE as context.
