@@ -9,7 +9,9 @@
             :class="{selected: model.id === modelID}"
             @click="changeModelID(model.id)"
           >
-            <FontAwesomeIcon :icon="getSvgIcon(model.type)" />
+            <Ollama class="custom-svg" v-if="model.type === 'ollama'"/>
+            <OpenAI class="custom-svg" v-else-if="model.type === 'openai'"/>
+            <OpenRouter class="custom-svg" v-else-if="model.type === 'openrouter'"/>
             <span>{{ model.name }}</span>
             <FontAwesomeIcon :icon="faXmark" @click="popupDeleteModel(model)" />
           </li>
@@ -50,6 +52,10 @@
 </template>
 
 <script setup lang="ts">
+import Ollama from '@/assets/icons/ollama.svg?component';
+import OpenAI from '@/assets/icons/openai.svg?component';
+import OpenRouter from '@/assets/icons/openrouter.svg?component';
+
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import type { Model } from '@/types'
@@ -59,7 +65,6 @@ import AddModel from '../popup/AddModel.vue'
 import DeleteModel from '../popup/DeleteModel.vue' 
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faHexagonNodes, faCircleNodes } from '@fortawesome/free-solid-svg-icons'
 import { faPlus, faRotateRight, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { faChevronDown, faArrowRight, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { useSenderStore } from '@/stores/sender'
@@ -100,17 +105,15 @@ function changeModelID(newID: string) {
 function updateConfig() {
   sendStore.configUpdate()
 }
-
-function getSvgIcon(modelType: string){
-  if(modelType === 'ollama'){
-    return faCircleNodes;
-  }
-  return faHexagonNodes;
-}
 </script>
 
 <style scoped>
 @import '../../assets/css/dropup.css';
+
+.custom-svg {
+  width: 1em;
+  fill: currentColor;
+}
 
 .input-lower {
   display: flex;

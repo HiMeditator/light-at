@@ -2,7 +2,10 @@
   <div class="model-dialog">
     <div class="model-info">
       <div class="model-head">
-        <FontAwesomeIcon :icon="getHeadIcon()" />
+        <Ollama v-if="props.dialog.type === 'ollama'"/>
+        <OpenAI v-else-if="props.dialog.type === 'openai'"/>
+        <OpenRouter v-else-if="props.dialog.type === 'openrouter'"/>
+        <FontAwesomeIcon v-else :icon="faLightbulb" />
       </div>
       <div class="model-name">{{ dialog.name }}</div>
       <div class="dialog-control">
@@ -55,12 +58,16 @@
 </template>
 
 <script setup lang="ts">
+import Ollama from '@/assets/icons/ollama.svg?component'
+import OpenAI from '@/assets/icons/openai.svg?component'
+import OpenRouter from '@/assets/icons/openrouter.svg?component'
+
 import { ref, watch } from 'vue'
 import MarkdownContent from './MarkdownContent.vue'
 import type { ModelDialogItem } from '@/types'
 import { useSenderStore } from '@/stores/sender'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faChevronUp, faChevronDown, faHexagonNodes, faCircleNodes, faLightbulb } from '@fortawesome/free-solid-svg-icons'
+import { faChevronUp, faChevronDown, faLightbulb } from '@fortawesome/free-solid-svg-icons'
 import { faClipboard, faXmark, faCheck } from '@fortawesome/free-solid-svg-icons'
 const props = defineProps<{ dialog: ModelDialogItem }>()
 const isCopied = ref(false);
@@ -108,16 +115,6 @@ watch(() => props.dialog.content, () => {
   updateContent()
 })
 
-function getHeadIcon() {
-  if (props.dialog.type === 'ollama') {
-    return faCircleNodes
-  }
-  else if (props.dialog.type === 'openai') {
-    return faHexagonNodes
-  }
-  return faLightbulb
-}
-
 function copyDialog() {
   navigator.clipboard.writeText(props.dialog.content)
   isCopied.value = true;
@@ -153,8 +150,8 @@ function deleteDialog() {
 }
 
 .model-head {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   color: white;
   border-radius: 50%;
   margin: 5px;
@@ -162,6 +159,12 @@ function deleteDialog() {
   justify-content: center;
   align-items: center;
   background-color: cornflowerblue;
+}
+
+.model-head svg {
+  width: 21px;
+  height: 21px;
+  fill: white;
 }
 
 .model-name {

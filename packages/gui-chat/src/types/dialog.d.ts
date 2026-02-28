@@ -7,7 +7,7 @@ export interface UserDialogItem {
 export interface ModelDialogItem {
     id: string;
     content: string;
-    type: 'ollama' | 'openai' | undefined;
+    type: 'ollama' | 'openai' | 'openrouter' | undefined;
     name: string;
     prompt_tokens?: number;
     completion_tokens?: number;

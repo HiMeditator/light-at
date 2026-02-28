@@ -114,7 +114,7 @@ export class RequestModel {
                         (item.reasoning ?? '') + item.content
                     );
                 }
-            }     
+            }
         }
         catch(error) {
             vscode.window.showErrorMessage(`${l10n.t('ts.loadChatSessionError')} ${error}`);
@@ -131,7 +131,7 @@ export class RequestModel {
             vscode.window.showErrorMessage('nanoid is not loaded');
             return;
         }
-        if(this.isRequesting) { 
+        if(this.isRequesting) {
             vscode.window.showInformationMessage(l10n.t('ts.fetchingModelInfo'));
             return;
         }
@@ -160,8 +160,11 @@ export class RequestModel {
         else if(this.model.type === 'openai'){
             this.requestOpenAI();
         }
+        else if(this.model.type === 'openrouter'){
+            this.requestOpenAI(true);
+        }
     }
-    
+
     public async requestOllama(){
         let ollama;
         if(this.model?.host){
@@ -175,7 +178,6 @@ export class RequestModel {
         let responseContent = '';
         let reasoning = '';
         const continuousChat = Configuration.get<boolean>('continuousChat');
-        // const messages = continuousChat ? this.chatMessages : [this.chatMessages[this.chatMessages.length - 1]];
         let messages = this.chatMessages;
         if(!continuousChat) {
             messages = [];
@@ -209,7 +211,6 @@ export class RequestModel {
             }
         } catch(error) {
             vscode.window.showErrorMessage(`${l10n.t('ts.requestFailed')} ${error}`);
-            // console.log(error);
             MessageSender.responseStream(` **${error}** `, this.messageID);
             MessageSender.responseEnd(this.messageID);
             this.pushModelMessage(`${error}`, reasoning);
@@ -228,14 +229,13 @@ export class RequestModel {
         this.isRequesting = false;
     }
 
-    public async requestOpenAI() {
+    public async requestOpenAI(openrouter: boolean = false) {
         let responseContent = '';
         let reasoning = '';
         let isReasoning = false;
         let prompt_tokens = 0;
         let completion_tokens = 0;
         const continuousChat = Configuration.get<boolean>('continuousChat');
-        // const messages = continuousChat ? this.chatMessages : [this.chatMessages[this.chatMessages.length - 1]];
         let messages = this.chatMessages;
         if(!continuousChat) {
             messages = [];
@@ -244,11 +244,18 @@ export class RequestModel {
             }
             messages.push(this.chatMessages[this.chatMessages.length - 1]);
         }
-        MessageSender.responseNew(this.messageID, 'openai', this.name);
+        MessageSender.responseNew(this.messageID, openrouter ? 'openrouter' : 'openai', this.name);
         try {
+            let baseURL = '';
+            if(openrouter) {
+                baseURL = 'https://openrouter.ai/api/v1';
+            }
+            else {
+                baseURL = this.model?.baseURL || '';
+            }
             const openai = new OpenAI({
                 apiKey: this.model?.apiKey || '',
-                baseURL: this.model?.baseURL || ''
+                baseURL: baseURL
             });
             const completion = await openai.chat.completions.create({
                 model: this.model?.model || '',
@@ -284,7 +291,6 @@ export class RequestModel {
                     responseContent += delta['content'];
                 }
                 MessageSender.responseStream(content, this.messageID);
-                // console.log(chunk['choices'][0]['delta'], content);
                 if(this.stopSign){
                     MessageSender.responseEnd(this.messageID);
                     this.pushModelMessage(responseContent, reasoning);
@@ -312,7 +318,7 @@ export class RequestModel {
         this.stopSign = false;
         this.isRequesting = false;
     }
-        
+
     public deleteDialog(requestID: string) {
         if(requestID === this.messageID && this.isRequesting) {
             vscode.window.showInformationMessage(l10n.t('ts.fetchingModelInfo'));

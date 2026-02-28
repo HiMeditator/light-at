@@ -13,8 +13,9 @@ export default {
     popup: {
         addModel: "モデルを追加",
         deleteModel: "モデルを削除",
-        openaiNote: "提供するモデルは、{a}OpenAIライブラリ{_a}のAPI と互換性がある必要があります。",
-        ollamaNote: "すでにローカルに {a}Ollama{_a} をインストールし、対応するモデルを設定していることを確認してください。",
+        openaiNote: "提供するモデルは{a}OpenAIライブラリ{_a}のAPIと互換性がある必要があります。主要なモデルプロバイダーの多くがこのインターフェース標準をサポートしています。",
+        ollamaNote: "{a}Ollama{_a}がローカルにインストールされ、正しく設定されていることを確認し、必要なモデルが実行されていることをご確認ください。",
+        openrouterNote: "{a}OpenRouter{_a}からAPIキーを取得してください。OpenRouterは複数のLLMプロバイダーへの統一アクセスを提供します。",
         deleteNote: "このモデルを削除してもよろしいですか。",
         hostNote: "Ollama サービスのアドレスを入力してください。ポート番号付きの URL、または localhost のポート番号を指定できます。",
         yes: "はい",

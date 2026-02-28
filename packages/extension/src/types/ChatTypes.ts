@@ -11,7 +11,7 @@ export interface SessionItem {
     contextList?: string;
     time: string;
     name?: string;
-    type?: 'ollama' | 'openai';
+    type?: 'ollama' | 'openai' | 'openrouter';
     reasoning?: string;
 }
 

@@ -13,8 +13,9 @@ export default {
     popup: {
         addModel: "Add Model",
         deleteModel: "Delete Model",
-        openaiNote: "The model you provided needs to be compatible with the {a}OpenAI API{_a}.",
-        ollamaNote: "Please confirm that you have installed {a}Ollama{_a} locally and configured the corresponding model.",
+        openaiNote: "The model you provide needs to be compatible with the {a}OpenAI API{_a}. Most major model providers support this interface standard.",
+        ollamaNote: "Please ensure that {a}Ollama{_a} is installed locally and properly configured, and that the required model is running.",
+        openrouterNote: "Please get your API key from {a}OpenRouter{_a}. OpenRouter provides unified access to multiple LLM providers.",
         deleteNote: "Are you sure you want to delete this model?",
         hostNote: "Please enter the address of the Ollama service, which can be a URL with a port number or a localhost port number.",
         yes: "Yes",

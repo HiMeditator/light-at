@@ -5,22 +5,30 @@
     <div class="popup-info">
       <p v-show="modelConfig.type === 'openai'" v-html="openaiNote"></p>
       <p v-show="modelConfig.type === 'ollama'" v-html="ollamaNote"></p>
+      <p v-show="modelConfig.type === 'openrouter'" v-html="openrouterNote"></p>
     </div>
     <form ref="modelForm">
       <div class="form-radio">
-        <div 
+        <div
           @click="modelConfig.type = 'openai'"
           :class="{ checked: modelConfig.type === 'openai' }"
         >
-          <FontAwesomeIcon :icon="faHexagonNodes" />
+          <OpenAI/>
           <span>openai</span>
         </div>
         <div
           @click="modelConfig.type = 'ollama'"
           :class="{ checked: modelConfig.type === 'ollama' }"
         >
-          <FontAwesomeIcon :icon="faCircleNodes" />
+          <Ollama/>
           <span>ollama</span>
+        </div>
+        <div
+          @click="modelConfig.type = 'openrouter'"
+          :class="{ checked: modelConfig.type === 'openrouter' }"
+        >
+          <OpenRouter/>
+          <span>openrouter</span>
         </div>
       </div>
       <div class="form-entry">
@@ -49,7 +57,7 @@
           :title="$t('popup.hostNote')"
         >
       </div>
-      <div class="form-entry" v-if="modelConfig.type === 'openai'">
+      <div class="form-entry" v-if="modelConfig.type === 'openai' || modelConfig.type === 'openrouter'">
         <label for="i-api_key">*apiKey</label>
         <input :type="apiKeyType" id="i-api_key" name="api_key" required
           v-model="modelConfig.apiKey"
@@ -68,13 +76,14 @@
 </template>
 
 <script setup lang="ts">
+import Ollama from '@/assets/icons/ollama.svg?component'
+import OpenAI from '@/assets/icons/openai.svg?component'
+import OpenRouter from '@/assets/icons/openrouter.svg?component'
+
 import { ref, toRaw, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import type { ModelConfig } from '@/types'
 import { useSenderStore } from '@/stores/sender'
-
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faHexagonNodes, faCircleNodes } from '@fortawesome/free-solid-svg-icons'
 
 const props = defineProps<{popupAddModel: () => void}>()
 const modelForm = ref<HTMLFormElement>()
@@ -99,6 +108,12 @@ const openaiNote = ref(
 const ollamaNote = ref(
   t('popup.ollamaNote', {
     a: '<a href="https://ollama.com/">',
+    _a: '</a>'
+  })
+)
+const openrouterNote = ref(
+  t('popup.openrouterNote', {
+    a: '<a href="https://openrouter.ai/">',
     _a: '</a>'
   })
 )
@@ -131,6 +146,13 @@ function submit(e: Event) {
       }
     }
   }
+  if(rawModelConfig.type === 'openrouter'){
+    delete rawModelConfig.baseURL
+    delete rawModelConfig.host
+  }
+  if(rawModelConfig.type === 'openai'){
+    delete rawModelConfig.host
+  }
   if(rawModelConfig.title?.trim() === ''){
     delete rawModelConfig.title
   }
@@ -157,17 +179,24 @@ function cancel() {
 }
 
 .form-radio div {
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   border-radius: 5px;
   border: 1px solid transparent;
-  line-height: 24px;
   cursor: pointer;
   margin: auto 10px;
-  padding: 2px 4px;
+  padding: 4px 8px;
 }
 
 .form-radio svg {
-  padding-right: 2px;
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}
+
+.form-radio .checked svg {
+  fill: var(--vscode-button-foreground, #ffffff);
 }
 
 .form-radio div:hover {

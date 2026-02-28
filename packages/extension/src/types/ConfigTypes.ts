@@ -1,6 +1,6 @@
 export interface Model {
     id: string;
-    type: 'openai' | 'ollama';
+    type: 'openai' | 'ollama' | 'openrouter';
     model: string;
     title?: string;
     baseURL?: string;

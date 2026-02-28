@@ -13,8 +13,9 @@ export default {
     popup: {
         addModel: "添加模型",
         deleteModel: "删除模型",
-        openaiNote: "您提供的模型需要兼容{a}OpenAI库{_a}的API。",
-        ollamaNote: "请确保您已经在本地安装了{a}Ollama{_a}，且配置了相应的模型。",
+        openaiNote: "您提供的模型需兼容{a}OpenAI库{_a}的API，大多数主流模型提供商都支持该接口标准。",
+        ollamaNote: "请确保您已在本地安装并正确配置了{a}Ollama{_a}，且需要使用的模型正在运行。",
+        openrouterNote: "请从{a}OpenRouter{_a}获取您的 API 密钥。OpenRouter 提供对多个大模型提供商的统一访问。",
         deleteNote: "你确定要删除该模型吗？",
         hostNote: "请输入 Ollama 服务的地址，可以是带端口号的 URL 或者 localhost 的端口号。",
         yes: "是",
