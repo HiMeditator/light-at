@@ -13,5 +13,5 @@
     "desc.loadLastChatSession": "是否在插件启动时载入最近一次的对话。",
     "desc.codeHighlightTheme": "设置代码高亮的主题。**重启插件后生效。**",
     "desc.maxChatHistory": "允许保存的会话记录的最大数量。`-1` 表示无限量（不建议）。",
-    "desc.useDefaultSystemPrompt": "是否使用默认的系统提示词（system prompt），如果不使用则系统提示词默认为空。"
+    "desc.useDefaultSystemPrompt": "是否使用默认的系统提示词（system prompt）。如果用户为定义当前模型的系统提示词且该选项启用，将使用插件的系统提示词。"
 }

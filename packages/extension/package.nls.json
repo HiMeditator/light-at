@@ -13,5 +13,5 @@
     "desc.loadLastChatSession": "Whether to load the last chat session when the extension is started.",
     "desc.codeHighlightTheme": "Set the theme for code highlighting. **This will take effect after restarting the plugin.**",
     "desc.maxChatHistory": "The maximum number of chat sessions allowed to be saved. `-1` indicates unlimited (not recommended).",
-    "desc.useDefaultSystemPrompt": "Whether to use the default system prompt. If not used, the system prompt will be empty by default."
+    "desc.useDefaultSystemPrompt": "Whether to use the default system prompt. If the user has not defined a system prompt for the current model and this option is enabled, the plugin's system prompt will be used."
 }

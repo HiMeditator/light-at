@@ -1,6 +1,5 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
-import path from 'path';
 
 interface TextEditorMap {
     [key: string]: vscode.TextEditor;
@@ -51,10 +50,8 @@ export class RepoContext {
                 contextPrompt += `\n\n[SELECTION_START]\n${this.selectedContent}\n[SELECTION_END]`;
             }
             else if(this.includeTextEditors[context]){
-                const fileName = path.basename(context);
-                const extName = path.extname(context);
                 const fileContent = this.includeTextEditors[context].document.getText();
-                contextPrompt += `\n\n[FILE_START ${fileName}.${extName}]\n${fileContent}\n[FILE_END]`;
+                contextPrompt += `\n\n[FILE_START ${context}]\n${fileContent}\n[FILE_END]`;
             }
         }
         return contextPrompt;
