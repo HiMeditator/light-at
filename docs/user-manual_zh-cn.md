@@ -1,6 +1,6 @@
 # Light At 用户手册
 
-适用于插件版本 v0.2.1
+适用于插件版本 v0.3.0
 
 - [English Version](user-manual_en.md)
 - [日本語版](user-manual_ja.md)

@@ -3,7 +3,7 @@
     <h1 align="center">light-at</h1>
     <p>Light At is a plugin for the VS Code-derived IDEs that provides only the purest in-IDE large model text chat functionality.</p>
     <p>
-      <a href="https://github.com/HiMeditator/light-at/releases"><img src="https://img.shields.io/badge/release-0.2.0-blue"></a>
+      <a href="https://github.com/HiMeditator/light-at/releases"><img src="https://img.shields.io/badge/release-0.3.0-blue"></a>
       <a href="https://github.com/HiMeditator/light-at/issues"><img src="https://img.shields.io/github/issues/HiMeditator/light-at?color=orange"></a>
       <img src="https://img.shields.io/github/languages/top/HiMeditator/light-at?color=royalblue">
       <img src="https://img.shields.io/github/repo-size/HiMeditator/light-at?color=green">
@@ -16,6 +16,8 @@
 </div>
 
 <hr>
+
+![](assets/media/main.png)
 
 ## 📥 Download
 
@@ -35,7 +37,7 @@
 
 > This project began in March 2025. At that time, most IDE large language model chat plugins on the market were primarily focused on code functionality, and most did not support mathematical formula rendering. This plugin was developed with the goal of providing a pure text chat experience with large language models within the IDE.
 
-- **Multiple Model Support:** Compatible with OpenAI API and local Ollama models
+- **Multiple Model Support:** OpenAI compatible API, Ollama, and OpenRouter are available.
 - **Math Formula Rendering:** Addresses the lack of math formula rendering in most intelligent assistants.
 - **Convenient Model Configuration:** Manage models through a table or by modifying configuration files.
 - **Select Chat Context:** Choose text files opened in the IDE as context.
@@ -98,7 +100,7 @@ Before packaging, ensure that any frontend changes have been updated to the plug
 pnpm package
 ```
 
-## 👏 Acknowledgments
+## 👏 Acknowledgements
 
 The plugin icon is modified from the work of [Duetone](assets/icons/credits.md).
 

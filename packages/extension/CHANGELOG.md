@@ -77,3 +77,11 @@ The project has been refactored based on [light-assistant](https://github.com/Hi
 
 - 添加默认系统提示词
 - 优化上下文信息提示词
+
+## v0.3.0
+
+2026-03-01
+
+- 优化默认系统提示词
+- 添加 OpenRouter 模型服务
+- 优化界面和模型图标

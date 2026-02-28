@@ -64,7 +64,7 @@
         >
       </div>
       <div class="form-entry">
-        <label for="i-system">system</label>
+        <label for="i-system">prompt</label>
         <textarea id="i-system" name="system" rows="2" placeholder="system prompt"
           v-model="modelConfig.system"
         ></textarea>

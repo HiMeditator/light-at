@@ -3,7 +3,7 @@
     <h1 align="center">light-at</h1>
     <p>Light At 是一款适用于 VS Code 衍生 IDE 的插件，仅提供最纯粹的 IDE 内大模型文本聊天功能。</p>
     <p>
-      <a href="https://github.com/HiMeditator/light-at/releases"><img src="https://img.shields.io/badge/release-0.2.0-blue"></a>
+      <a href="https://github.com/HiMeditator/light-at/releases"><img src="https://img.shields.io/badge/release-0.3.0-blue"></a>
       <a href="https://github.com/HiMeditator/light-at/issues"><img src="https://img.shields.io/github/issues/HiMeditator/light-at?color=orange"></a>
       <img src="https://img.shields.io/github/languages/top/HiMeditator/light-at?color=royalblue">
       <img src="https://img.shields.io/github/repo-size/HiMeditator/light-at?color=green">
@@ -16,6 +16,8 @@
 </div>
 
 <hr>
+
+![](assets/media/main.png)
 
 ## 📥 下载
 
@@ -35,7 +37,7 @@
 
 > 该项目开始于 2025 年 3 月。当时市面上的 IDE 大模型聊天插件多以代码功能为主，大多不支持数学公式渲染。本插件以提供纯粹的 IDE 内大模型文本聊天体验为目标而开发。
 
-- **多种模型支持**：可使用 OpenAI 兼容 API 和本地 Ollama 模型
+- **多种模型支持**：可使用 OpenAI 兼容 API 、Ollama 和 OpenRouter
 - **数学公式渲染:** 弥补了大多数智能助手没有数学公式渲染的缺点。
 - **方便的模型配置:** 通过表格或修改配置文件管理模型。
 - **选择聊天上下文:** 选择 IDE 中打开过的文本文件作为上下文

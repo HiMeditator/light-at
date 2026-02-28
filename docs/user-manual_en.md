@@ -1,6 +1,6 @@
 # Light At User Manual
 
-For plugin version v0.2.1
+For plugin version v0.3.0
 
 - [简体中文版](user-manual_zh-cn.md)
 - [日本語版](user-manual_ja.md)

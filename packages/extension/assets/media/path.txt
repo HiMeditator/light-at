@@ -1,3 +1,5 @@
+https://github.com/HiMeditator/light-at/raw/HEAD/assets/media/main.png
+
 https://github.com/HiMeditator/light-at/raw/HEAD/assets/media/context.gif
 
 https://github.com/HiMeditator/light-at/raw/HEAD/assets/media/history.gif

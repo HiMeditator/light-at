@@ -3,8 +3,8 @@
   "displayName": "Light At (Chat with LLMs)",
   "publisher": "himeditator",
   "icon": "assets/icons/light-at.png",
-  "description": "Light At is an open-source chat assistant for VS Code, emphasizing the experience of chatting with LLMs within the IDE.",
-  "version": "0.2.0",
+  "description": "Light At is an extension for the VS Code-derived IDEs that provides only the purest in-IDE large model text chat functionality.",
+  "version": "0.3.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/HiMeditator/light-at"

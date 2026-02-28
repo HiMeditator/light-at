@@ -3,7 +3,7 @@
     <h1 align="center">light-at</h1>
     <p>Light At は、VS Code 派生 IDE 向けのプラグインであり、最も純粋な IDE 内大規模モデルテキストチャット機能のみを提供します。</p>
     <p>
-      <a href="https://github.com/HiMeditator/light-at/releases"><img src="https://img.shields.io/badge/release-0.2.0-blue"></a>
+      <a href="https://github.com/HiMeditator/light-at/releases"><img src="https://img.shields.io/badge/release-0.3.0-blue"></a>
       <a href="https://github.com/HiMeditator/light-at/issues"><img src="https://img.shields.io/github/issues/HiMeditator/light-at?color=orange"></a>
       <img src="https://img.shields.io/github/languages/top/HiMeditator/light-at?color=royalblue">
       <img src="https://img.shields.io/github/repo-size/HiMeditator/light-at?color=green">
@@ -16,6 +16,8 @@
 </div>
 
 <hr>
+
+![](assets/media/main.png)
 
 ## 📥 ダウンロード
 
@@ -35,7 +37,7 @@
 
 > 本プロジェクトは2025年3月に開始されました。当時、市場にあったIDEの大規模言語モデルチャットプラグインの多くはコード機能を中心としており、数式のレンダリングをサポートしていないものがほとんどでした。本プラグインは、IDE内で純粋な大規模言語モデルとのテキストチャット体験を提供することを目標に開発されました。
 
-- **複数モデルのサポート:** OpenAI互換APIおよびローカルのOllamaモデルが利用可能
+- **複数モデルのサポート:** OpenAI互換API、OllamaおよびOpenRouterが利用可能。
 - **数学公式レンダリング:** 多くのスマートアシスタントが欠いている数学公式のレンダリング機能を補完します。
 - **便利なモデル設定:** テーブルや設定ファイルの編集を通じてモデルを管理できます。
 - **チャットコンテキストの選択:** IDE で開いたテキストファイルを選んでコンテキストとして使用できます。
