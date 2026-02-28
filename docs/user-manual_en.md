@@ -1,6 +1,6 @@
 # Light At User Manual
 
-For plugin version v0.1.1
+For plugin version v0.2.1
 
 - [简体中文版](user-manual_zh-cn.md)
 - [日本語版](user-manual_ja.md)
@@ -20,16 +20,18 @@ The configuration format is as follows:
   "models": [
     {
       "id": "p_Xb-FcE7SeVgSG6SfdWB",
-      "type": "ollama/openai",
+      "type": "ollama | openai",
       "model": "model name",
       "title": "display name",
       "baseURL": "https://model_base_url",
       "host": "Ollama serve host",
-      "apiKey": "sk-********************************"
+      "apiKey": "sk-* | env@API_KEY",
+      "system": "system prompt"
     }
   ]
 }
 ```
+
 - `id`: Required. A unique identifier for the model. Customize it to ensure it is different from other `id`s.
 - `type`: Required. The type of the model, with possible values being `ollama` or `openai`. The former uses a locally configured model from [Ollama](https://github.com/ollama/ollama), while the latter uses the OpenAI library in node.js to call cloud-based models.
 - `model`: Required. The name of the model, e.g., `llama3.3-70b-instruct`.
@@ -37,6 +39,28 @@ The configuration format is as follows:
 - `baseURL`: Required if `type` is `openai`. The base URL for API requests, which depends on your model provider.
 - `host`: Optional. The host address of the Ollama server, or the localhost port number.
 - `apiKey`: Required if `type` is `openai`. The API key, obtained from your model provider.
+- `system`: Optional. The system prompt for model initialization. If not set, the default system prompt is as follows.
+
+```typescript
+const DEFAULT_SYSTEM_PROMPT = `
+You are Light At, an intelligent chat assistant integrated within the IDE.
+
+You are required to answer any questions posed by the user. The following information may assist you in providing better responses:
+
+- Current IDE: ${vscode.env.appName}
+- User's operating system type: ${os.type()}
+- User's operating system version: ${os.release()}
+- System architecture: ${os.arch()}
+- User's IDE interface language code: ${vscode.env.language}
+
+The language you use should prioritize the language the user communicates with you in, with the IDE's interface language as a fallback.
+
+Note that after the user's request, they may attach selected text snippets or complete file content from within the IDE as contextual information, formatted as follows:
+
+- For selected text snippets, it begins with [SELECTION_START] and ends with [SELECTION_END].
+- For complete files, it begins with [FILE_START <file_path>] and ends with [FILE_END]. Here, <file_path> represents the absolute path of the file.
+`.trim();
+```
 
 > **Note:** For the `apiKey` field, you can use environment variables. The format is: `env@API_KEY_NAME`, where `API_KEY_NAME` is the name of your actual API key as stored in the environment variables. The environment variable you just set may not take effect immediately. Generally, you need to restart your computer for it to work.
 
@@ -112,6 +136,7 @@ While the large model is generating content, you can click the `Stop Generation`
 Click the `Open Settings` option in the upper right corner of the plugin interface to access the plugin settings page.
 
 - `Light At: Load Last Chat Session` Default is off. When enabled, the plugin will automatically load the last chat session each time it is opened.
+- `Light At: Use Default System Prompt` Default is on. If enabled and no custom system prompt is set for the current model, the plugin's default system prompt will be used.
 - `Light At: Continuous Chat` Default is on. When disabled, after each message sent, the model will only receive the current request content, losing its memory within the same conversation. This can reduce the number of input `tokens`.
 - `Light At: Display Info Message` Default is on. When disabled, new conversations will no longer display a welcome message.
 - `Light At: Display Tokens Usage` Default is on. When disabled, the usage of `tokens` by the online model will not be displayed.

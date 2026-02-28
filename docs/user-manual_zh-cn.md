@@ -1,6 +1,6 @@
 # Light At 用户手册
 
-适用于插件版本 v0.1.1
+适用于插件版本 v0.2.1
 
 - [English Version](user-manual_en.md)
 - [日本語版](user-manual_ja.md)
@@ -25,11 +25,13 @@
       "title": "display name",
       "baseURL": "https://model_base_url",
       "host": "Ollama serve host",
-      "apiKey": "sk-* | env@API_KEY"
+      "apiKey": "sk-* | env@API_KEY",
+      "system": "system prompt"
     }
   ]
 }
 ```
+
 - `id`：必须。模型唯一标识符，可以自定义，保证和其他 `id` 不同即可。
 - `type`：必须。模型类型，可选值：`ollama` 或 `openai`。前者使用本地 [Ollama](https://github.com/ollama/ollama) 配置的模型，后者使用 node.js 的 OpenAI 库调用云端模型。
 - `model`：必须。模型名称，例如：`llama3.3-70b-instruct`。
@@ -37,6 +39,28 @@
 - `baseURL`：若 `type` 为 `openai` 则必须。API 请求的基础 URL，取决于您的模型服务商。
 - `host`: 可选。Ollama 服务器的主机地址，或者 localhost 的端口号。
 - `apiKey`：若 `type` 为 `openai` 则必须。API 密钥，从您的模型服务商获取。
+- `system`：可选。模型系统提示，用于模型初始化，若不设置，默认系统提示词如下。
+
+```typescript
+const DEFAULT_SYSTEM_PROMPT = `
+You are Light At, an intelligent chat assistant integrated within the IDE.
+
+You are required to answer any questions posed by the user. The following information may assist you in providing better responses:
+
+- Current IDE: ${vscode.env.appName}
+- User's operating system type: ${os.type()}
+- User's operating system version: ${os.release()}
+- System architecture: ${os.arch()}
+- User's IDE interface language code: ${vscode.env.language}
+
+The language you use should prioritize the language the user communicates with you in, with the IDE's interface language as a fallback.
+
+Note that after the user's request, they may attach selected text snippets or complete file content from within the IDE as contextual information, formatted as follows:
+
+- For selected text snippets, it begins with [SELECTION_START] and ends with [SELECTION_END].
+- For complete files, it begins with [FILE_START <file_path>] and ends with [FILE_END]. Here, <file_path> represents the absolute path of the file.
+`.trim();
+```
 
 > **注意:** 对于 `apiKey` 字段，您可以使用环境变量。设置格式为：`env@API_KEY_NAME` 其中 `API_KEY_NAME` 为您实际的 API 密钥在环境变量中对应的名称。刚设置的环境变量可能不生效，一般需要重启电脑后生效。
 
@@ -113,6 +137,7 @@
 可点击插件界面右上角 `设置` 进入插件设置页面。
 
 - `Light At: Load Last Chat Session` 默认关闭，启用后，每次打开插件时，都会自动加载上次聊天记录。
+- `Light At: Use Default System Prompt` 默认开启，开启后若没有设置当前模型的自定义系统提示词，则使用插件的默认系统提示词。
 - `Light At: Continuous Chat` 默认开启，禁用后，每次发送消息后，模型只会接收当前请求内容，失去在同一个对话中的记忆能力。可以减少模型的输入 `tokens` 数量。
 - `Light At: Display Info Message` 默认开启，禁用后，新对话将不再显示欢迎消息。
 - `Light At: Display Tokens Usage` 默认开启，禁用后，不会显示在线模型的 `tokens` 使用情况。

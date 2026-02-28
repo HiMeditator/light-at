@@ -1,7 +1,7 @@
 <div align="center">
     <img src="assets/icons/light-at.png" width="90px" height="90px"/>
     <h1 align="center">light-at</h1>
-    <p>Light-at is an intelligent assistant plugin for VS Code that focuses more on the large model chat experience within the IDE rather than coding capabilities.</p>
+    <p>Light At is a plugin for the VS Code-derived IDEs that provides only the purest in-IDE large model text chat functionality.</p>
     <p>
       <a href="https://github.com/HiMeditator/light-at/releases"><img src="https://img.shields.io/badge/release-0.2.0-blue"></a>
       <a href="https://github.com/HiMeditator/light-at/issues"><img src="https://img.shields.io/github/issues/HiMeditator/light-at?color=orange"></a>
@@ -32,6 +32,8 @@
 - [ユーザーマニュアル](docs/user-manual_ja.md)
 
 ## ✨ Features
+
+> This project began in March 2025. At that time, most IDE large language model chat plugins on the market were primarily focused on code functionality, and most did not support mathematical formula rendering. This plugin was developed with the goal of providing a pure text chat experience with large language models within the IDE.
 
 - **Multiple Model Support:** Compatible with OpenAI API and local Ollama models
 - **Math Formula Rendering:** Addresses the lack of math formula rendering in most intelligent assistants.
@@ -99,3 +101,9 @@ pnpm package
 ## 👏 Acknowledgments
 
 The plugin icon is modified from the work of [Duetone](assets/icons/credits.md).
+
+This project's Markdown rendering uses the following third-party libraries:
+
+- Markdown parsing: [marked](https://github.com/markedjs/marked)
+- Mathematical formula rendering: [katex](https://github.com/KaTeX/KaTeX)
+- Code syntax highlighting: [highlight.js](https://github.com/highlightjs/highlight.js)

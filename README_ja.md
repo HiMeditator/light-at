@@ -1,7 +1,7 @@
 <div align="center">
     <img src="assets/icons/light-at.png" width="90px" height="90px"/>
     <h1 align="center">light-at</h1>
-    <p>ライトアットは VS Code 向けのスマートアシスタントプラグインです。コード能力よりも、IDE 内での大規模モデルチャット体験に重点を置いています。</p>
+    <p>Light At は、VS Code 派生 IDE 向けのプラグインであり、最も純粋な IDE 内大規模モデルテキストチャット機能のみを提供します。</p>
     <p>
       <a href="https://github.com/HiMeditator/light-at/releases"><img src="https://img.shields.io/badge/release-0.2.0-blue"></a>
       <a href="https://github.com/HiMeditator/light-at/issues"><img src="https://img.shields.io/github/issues/HiMeditator/light-at?color=orange"></a>
@@ -32,6 +32,8 @@
 - [ユーザーマニュアル](docs/user-manual_ja.md)
 
 ## ✨ 特徴
+
+> 本プロジェクトは2025年3月に開始されました。当時、市場にあったIDEの大規模言語モデルチャットプラグインの多くはコード機能を中心としており、数式のレンダリングをサポートしていないものがほとんどでした。本プラグインは、IDE内で純粋な大規模言語モデルとのテキストチャット体験を提供することを目標に開発されました。
 
 - **複数モデルのサポート:** OpenAI互換APIおよびローカルのOllamaモデルが利用可能
 - **数学公式レンダリング:** 多くのスマートアシスタントが欠いている数学公式のレンダリング機能を補完します。
@@ -99,3 +101,9 @@ pnpm package
 ## 👏 謝辞
 
 プラグインアイコンは [Duetone](assets/icons/credits.md) の作品を改変しています。
+
+本プロジェクトの Markdown レンダリングには、以下のサードパーティライブラリを使用しています：
+
+- Markdown パース：[marked](https://github.com/markedjs/marked)
+- 数式レンダリング：[katex](https://github.com/KaTeX/KaTeX)
+- コードシンタックスハイライト：[highlight.js](https://github.com/highlightjs/highlight.js)

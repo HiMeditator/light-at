@@ -1,7 +1,7 @@
 <div align="center" >
     <img src="assets/icons/light-at.png" width="90px" height="90px"/>
     <h1 align="center">light-at</h1>
-    <p>轻亮是一个面向 VS Code 的智能助手插件。比起代码能力，轻亮更注重 IDE 内的大模型聊天体验。</p>
+    <p>Light At 是一款适用于 VS Code 衍生 IDE 的插件，仅提供最纯粹的 IDE 内大模型文本聊天功能。</p>
     <p>
       <a href="https://github.com/HiMeditator/light-at/releases"><img src="https://img.shields.io/badge/release-0.2.0-blue"></a>
       <a href="https://github.com/HiMeditator/light-at/issues"><img src="https://img.shields.io/github/issues/HiMeditator/light-at?color=orange"></a>
@@ -33,13 +33,12 @@
 
 ## ✨ 特性
 
+> 该项目开始于 2025 年 3 月。当时市面上的 IDE 大模型聊天插件多以代码功能为主，大多不支持数学公式渲染。本插件以提供纯粹的 IDE 内大模型文本聊天体验为目标而开发。
+
 - **多种模型支持**：可使用 OpenAI 兼容 API 和本地 Ollama 模型
 - **数学公式渲染:** 弥补了大多数智能助手没有数学公式渲染的缺点。
-
 - **方便的模型配置:** 通过表格或修改配置文件管理模型。
-
 - **选择聊天上下文:** 选择 IDE 中打开过的文本文件作为上下文
-
 - **聊天记录管理:** 管理历史聊天，删除聊天中的内容
 
 ### ♾️ 数学公式渲染
@@ -103,3 +102,9 @@ pnpm package
 ## 👏 致谢
 
 插件图标修改自 [Duetone](assets/icons/credits.md) 的作品。
+
+本项目的 Markdown 渲染使用了以下第三方库：
+
+- Markdown 解析：[marked](https://github.com/markedjs/marked)
+- 数学公式渲染：[katex](https://github.com/KaTeX/KaTeX)
+- 代码语法高亮：[highlight.js](https://github.com/highlightjs/highlight.js)
