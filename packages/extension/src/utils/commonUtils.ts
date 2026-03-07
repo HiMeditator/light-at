@@ -2,6 +2,7 @@ function padNumber(num: number): string {
     return num < 10 ? `0${num}` : `${num}`;
 }
 
+/** 获取当前日期时间字符串，格式：`YYYY-MM-DD_HH-mm-ss` */
 export function getTimeStr(){
     const now = new Date();
     const year = now.getFullYear();

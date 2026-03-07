@@ -5,8 +5,8 @@ import { l10n } from '../utils/langUtils';
 import { Configuration } from '../utils/Configuration';
 import { getTimeStr } from '../utils/commonUtils';
 import { MainifestItem } from '../types/ChatTypes';
-import { GlobalConfig, GlobalData } from '../core/data';
-
+import { GlobalConfig } from '../core/data';
+import { SessionManager } from '../chat/SessionManager';
 
 export class ChatHistoryManager {
     static manifest: MainifestItem[] = [];
@@ -30,14 +30,14 @@ export class ChatHistoryManager {
     }
 
     static newChatSession(saveSesion = true){
-        if(GlobalData.isStreaming){
+        if(SessionManager.isStreaming){
             vscode.window.showInformationMessage(l10n.t('ts.fetchingModelInfo'));
             return;
         }
         if(saveSesion){
             this.saveChatSession();
         }
-        GlobalData.clearAndNewChatSession();
+        SessionManager.clearAndNewChatSession();
         this.sessionName = `${getTimeStr()}.json`;
     }
 
@@ -67,14 +67,14 @@ export class ChatHistoryManager {
     }
     
     static saveChatSession(){
-        if(GlobalData.chatMessages.length > 0) {
-            const lastMessage = GlobalData.chatMessages[GlobalData.chatMessages.length - 1];
+        if(SessionManager.chatMessages.length > 0) {
+            const lastMessage = SessionManager.chatMessages[SessionManager.chatMessages.length - 1];
             if(lastMessage.role === 'user'){
-                GlobalData.chatMessages.pop();
-                GlobalData.chatSession.pop();
+                SessionManager.chatMessages.pop();
+                SessionManager.chatSession.pop();
             }
         }
-        if(GlobalData.chatSession.length <= 1) {
+        if(SessionManager.chatSession.length <= 1) {
             this.deleteChatSession(this.sessionName);
             return;
         }
@@ -82,7 +82,7 @@ export class ChatHistoryManager {
         const filePath = vscode.Uri.joinPath(GlobalConfig.sessionDir, this.sessionName);
         fs.writeFileSync(
             filePath.fsPath,
-            JSON.stringify(GlobalData.chatSession, null, 2)
+            JSON.stringify(SessionManager.chatSession, null, 2)
         );
 
         let inManifest = false;
@@ -90,9 +90,9 @@ export class ChatHistoryManager {
             if(this.sessionName === this.manifest[i].name){
                 this.manifest[i].workspace = vscode.workspace.workspaceFolders?.[0].uri.fsPath || '';
                 this.manifest[i].update = new Date().toLocaleString();
-                let content = GlobalData.chatSession[0].content;
-                if(GlobalData.chatSession[0].role === 'system'){
-                    content = GlobalData.chatSession[1].content;
+                let content = SessionManager.chatSession[0].content;
+                if(SessionManager.chatSession[0].role === 'system'){
+                    content = SessionManager.chatSession[1].content;
                 }
                 if(content.length > 64){
                     content = content.substring(0, 64) + '...';
@@ -103,9 +103,9 @@ export class ChatHistoryManager {
             }
         }
         if(!inManifest){
-            let content = GlobalData.chatSession[0].content;
-            if(GlobalData.chatSession[0].role === 'system'){
-                content = GlobalData.chatSession[1].content;
+            let content = SessionManager.chatSession[0].content;
+            if(SessionManager.chatSession[0].role === 'system'){
+                content = SessionManager.chatSession[1].content;
             }
             if(content.length > 64){
                 content = content.substring(0, 64) + '...';
@@ -129,7 +129,7 @@ export class ChatHistoryManager {
     }
 
     static loadChatSession(fileName: string, newLoad = false){
-        if(GlobalData.isStreaming){
+        if(SessionManager.isStreaming){
             vscode.window.showInformationMessage(l10n.t('ts.fetchingModelInfo'));
             return;
         }
@@ -146,7 +146,7 @@ export class ChatHistoryManager {
         }
         this.sessionName = fileName;
         const filePath = vscode.Uri.joinPath(GlobalConfig.sessionDir, fileName);
-        GlobalData.loadChatSession(filePath.fsPath);
+        SessionManager.loadChatSession(filePath.fsPath);
     }
 
     static syncManifestWithFiles(){

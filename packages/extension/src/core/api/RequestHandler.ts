@@ -4,7 +4,7 @@ import { MessageSender } from './MessageSender';
 import { Configuration } from '../../utils/Configuration';
 import { ConfigManager } from '../../storage/ConfigManager';
 import { RepoContext } from '../../chat/RepoContext';
-import { RequestModel } from '../../chat/RequestModel';
+import { SessionManager } from '../../chat/SessionManager';
 import { ChatHistoryManager } from '../../storage/ChatHistoryManager';
 
 export class RequestHandler {
@@ -72,15 +72,15 @@ export class RequestHandler {
     }
 
     private static handelRequest(request: string, context: string){
-        RequestModel.handleRequest(request, context);
+        SessionManager.handleRequest(request, context);
     }
 
     private static deleteDialog(requestID: string){
-        RequestModel.deleteDialog(requestID);
+        SessionManager.deleteDialog(requestID);
     }
 
     private static responseStop(){
-        RequestModel.handleStop();
+        SessionManager.stopStreaming();
     }
 
     private static contextGet(){

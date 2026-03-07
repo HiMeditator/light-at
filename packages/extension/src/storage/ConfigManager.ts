@@ -1,12 +1,11 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import * as fs from 'fs';
-// import { l10n } from 'vscode';
-import { GlobalConfig, GlobalContext } from '../core/data';
+import type { Config, Model } from '../types';
 import { l10n } from '../utils/langUtils';
 import { nanoid } from '../utils/commonUtils';
-import type { Config, Model } from '../types/ConfigTypes';
 import { MessageSender } from '../core/api/MessageSender';
+import { GlobalConfig, GlobalContext } from '../core/data';
 
 export class ConfigManager {
     static modelList: Model[] = [];
