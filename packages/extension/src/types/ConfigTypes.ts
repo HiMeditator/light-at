@@ -1,4 +1,4 @@
-export interface Model {
+export interface ChatModel {
     id: string;
     type: 'openai' | 'ollama' | 'openrouter';
     model: string;
@@ -10,5 +10,5 @@ export interface Model {
 }
 
 export interface Config {
-    models: Model[];
+    models: ChatModel[];
 }

@@ -10,10 +10,10 @@
       <div class="model-name">{{ dialog.name }}</div>
       <div class="dialog-control">
         <FontAwesomeIcon
-          v-if="hasReasoning"
+          v-if="hasThinking"
           @click="clickChevron"
-          :icon="showReasoning ? faChevronUp : faChevronDown"
-          :title="$t('dialog.reasoning')"
+          :icon="showThinking ? faChevronUp : faChevronDown"
+          :title="$t('dialog.thinking')"
         />
         <FontAwesomeIcon
           @click="copyDialog"
@@ -31,17 +31,17 @@
     <div class="model-content">
       <div
         :class="[
-          'reasoning-content', 
-          showReasoning ? '' : 'reasoning-content-collpase'
+          'thinking-content', 
+          showThinking ? '' : 'thinking-content-collpase'
         ]"
         @dblclick="clickChevron"
-        v-if="hasReasoning"
+        v-if="hasThinking"
       >
-        <template v-if="showReasoning">
-          <MarkdownContent :content="reasoning" />
+        <template v-if="showThinking">
+          <MarkdownContent :content="thinking" />
         </template>
         <template v-else>
-          {{ reasoning }}
+          {{ thinking }}
         </template>
       </div>
       <MarkdownContent :content="content" />
@@ -72,36 +72,36 @@ import { faClipboard, faXmark, faCheck } from '@fortawesome/free-solid-svg-icons
 const props = defineProps<{ dialog: ModelDialogItem }>()
 const isCopied = ref(false);
 
-const hasReasoning = ref(false)
-const showReasoning = ref(true)
-const clickReasoning = ref(false)
-const reasoning = ref('')
+const hasThinking = ref(false)
+const showThinking = ref(true)
+const clickThinking = ref(false)
+const thinking = ref('')
 let content = ref('')
 
 function clickChevron() {
-  showReasoning.value = !showReasoning.value
-  clickReasoning.value = true
+  showThinking.value = !showThinking.value
+  clickThinking.value = true
 }
 
 function updateContent() {
   if(props.dialog.content.startsWith('<think>')){
-    hasReasoning.value = true
+    hasThinking.value = true
     const pos = props.dialog.content.indexOf('</think>')
     if(pos < 0) {
-      if(!clickReasoning.value){
-        showReasoning.value = true
+      if(!clickThinking.value){
+        showThinking.value = true
       }
-      reasoning.value = props.dialog.content.substring(7)
+      thinking.value = props.dialog.content.substring(7)
     }
     else{
-      if(props.dialog.type && !clickReasoning.value) {
-        showReasoning.value = false
+      if(props.dialog.type && !clickThinking.value) {
+        showThinking.value = false
       }
-      reasoning.value = props.dialog.content.substring(7, pos)
+      thinking.value = props.dialog.content.substring(7, pos)
       content.value = props.dialog.content.substring(pos + 8)
     }
-    if(!reasoning.value.trim()) {
-      hasReasoning.value = false
+    if(!thinking.value.trim()) {
+      hasThinking.value = false
     }
   }
   else {
@@ -202,7 +202,7 @@ function deleteDialog() {
   margin: 5px;
 }
 
-.reasoning-content {
+.thinking-content {
   margin: 10px 5px;
   padding: 10px;
   border-radius: 10px;
@@ -210,11 +210,11 @@ function deleteDialog() {
   border-left: 5px solid rgba(128, 128, 128, 0.5);
 }
 
-.reasoning-content:hover {
+.thinking-content:hover {
   background-color: rgba(128, 128, 128, 0.1);
 }
 
-.reasoning-content-collpase {
+.thinking-content-collpase {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

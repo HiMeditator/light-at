@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
-import { GlobalConfig } from '../data';
-import { loadSession } from '../../chat/loadSession';
+import { GlobalConfig } from '../../data';
+import { sessionQuickPick } from '../../chat/sessionQuickPick';
 import { ChatHistoryManager } from '../../storage/ChatHistoryManager';
 
 export function registerCommands(context: vscode.ExtensionContext) {
@@ -21,7 +21,7 @@ export function registerCommands(context: vscode.ExtensionContext) {
     context.subscriptions.push(gotoConfig);
 
     const sessionsLoad = vscode.commands.registerCommand('light-at.load.sessions', () => {
-        loadSession();
+        sessionQuickPick();
     });
     context.subscriptions.push(sessionsLoad);
 

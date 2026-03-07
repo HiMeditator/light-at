@@ -200,7 +200,7 @@
   },
   "dependencies": {
     "nanoid": "^5.1.5",
-    "ollama": "^0.5.14",
-    "openai": "^4.91.1"
+    "ollama": "^0.5.18",
+    "openai": "^4.104.0"
   }
 }

@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { Configuration } from '../../utils/Configuration';
+import { Configuration } from '../api/Configuration';
 import { RepoContext } from '../../chat/RepoContext';
 
 export function registerListeners(context: vscode.ExtensionContext) {

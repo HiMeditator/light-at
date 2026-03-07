@@ -14,11 +14,11 @@ importers:
         specifier: ^5.1.5
         version: 5.1.5
       ollama:
-        specifier: ^0.5.14
-        version: 0.5.14
+        specifier: ^0.5.18
+        version: 0.5.18
       openai:
-        specifier: ^4.91.1
-        version: 4.91.1
+        specifier: ^4.104.0
+        version: 4.104.0
     devDependencies:
       '@types/mocha':
         specifier: ^10.0.9
@@ -1684,8 +1684,8 @@ packages:
   nth-check@2.1.1:
     resolution: {integrity: sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==}
 
-  ollama@0.5.14:
-    resolution: {integrity: sha512-pvOuEYa2WkkAumxzJP0RdEYHkbZ64AYyyUszXVX7ruLvk5L+EiO2G71da2GqEQ4IAk4j6eLoUbGk5arzFT1wJA==}
+  ollama@0.5.18:
+    resolution: {integrity: sha512-lTFqTf9bo7Cd3hpF6CviBe/DEhewjoZYd9N/uCe7O20qYTvGqrNOFOBDj3lbZgFWHUgDv5EeyusYxsZSLS8nvg==}
 
   once@1.4.0:
     resolution: {integrity: sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w==}
@@ -1694,8 +1694,8 @@ packages:
     resolution: {integrity: sha512-kbpaSSGJTWdAY5KPVeMOKXSrPtr8C8C7wodJbcsd51jRnmD+GZu8Y0VoU6Dm5Z4vWr0Ig/1NKuWRKf7j5aaYSg==}
     engines: {node: '>=6'}
 
-  openai@4.91.1:
-    resolution: {integrity: sha512-DbjrR0hIMQFbxz8+3qBsfPJnh3+I/skPgoSlT7f9eiZuhGBUissPQULNgx6gHNkLoZ3uS0uYS6eXPUdtg4nHzw==}
+  openai@4.104.0:
+    resolution: {integrity: sha512-p99EFNsA/yX6UhVO93f5kJsDRLAg+CTA2RBqdHK4RtK8u5IJw32Hyb2dTGKbnnFmnuoBv5r7Z2CURI9sGZpSuA==}
     hasBin: true
     peerDependencies:
       ws: ^8.18.0
@@ -3781,7 +3781,7 @@ snapshots:
     dependencies:
       boolbase: 1.0.0
 
-  ollama@0.5.14:
+  ollama@0.5.18:
     dependencies:
       whatwg-fetch: 3.6.20
 
@@ -3793,7 +3793,7 @@ snapshots:
     dependencies:
       mimic-fn: 2.1.0
 
-  openai@4.91.1:
+  openai@4.104.0:
     dependencies:
       '@types/node': 18.19.86
       '@types/node-fetch': 2.6.12

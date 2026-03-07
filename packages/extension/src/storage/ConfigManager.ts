@@ -1,14 +1,14 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import * as fs from 'fs';
-import type { Config, Model } from '../types';
+import type { Config, ChatModel } from '../types';
 import { l10n } from '../utils/langUtils';
 import { nanoid } from '../utils/commonUtils';
 import { MessageSender } from '../core/api/MessageSender';
-import { GlobalConfig, GlobalContext } from '../core/data';
+import { GlobalConfig, GlobalContext } from '../data';
 
 export class ConfigManager {
-    static modelList: Model[] = [];
+    static modelList: ChatModel[] = [];
 
     static init() {
         const folderPath = path.dirname(GlobalConfig.configUri.fsPath);
@@ -27,13 +27,13 @@ export class ConfigManager {
      * 基于模型 ID （保存在 `context.globalState` 中），获取当前选择的模型。
      * 如果没有选择或找不到对应 ID 的模型，则返回 undefined。
      */
-    static getModel(): Model | undefined {
+    static getModel(): ChatModel | undefined {
         const modelID = GlobalContext.context.globalState.get<string>('modelID');
-        const model = this.modelList.find((model: Model) => {
+        const model = this.modelList.find((model: ChatModel) => {
             return model.id === modelID;
         });
         if (!model) { return undefined; }
-        const realModel: Model = { ...model };
+        const realModel: ChatModel = { ...model };
         if (realModel.apiKey?.startsWith('env@')) {
             realModel.apiKey = process.env[realModel.apiKey.substring(4)]?.trim() || '';
             if(realModel.apiKey === ''){
@@ -60,7 +60,7 @@ export class ConfigManager {
     static updateModelsFromConfig(){
         const modelList = this.getConfigObject().models;
         this.modelList = modelList;
-        const models = modelList.map((model: Model) => {
+        const models = modelList.map((model: ChatModel) => {
             return {
                 id: model.id,
                 type: model.type,

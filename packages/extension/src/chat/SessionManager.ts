@@ -1,14 +1,14 @@
 import * as vscode from 'vscode';
 import * as os from 'os';
 import * as fs from 'fs';
+import type { ChatModel } from '../types';
+import type { ChatMessage, SessionItem } from '../types';
 import { l10n } from '../utils/langUtils';
 import { nanoid } from '../utils/commonUtils';
-import { Model } from '../types/ConfigTypes';
 import { RepoContext } from './RepoContext';
-import { Configuration } from '../utils/Configuration';
+import { Configuration } from '../core/api/Configuration';
 import { MessageSender } from '../core/api/MessageSender';
 import { ConfigManager } from '../storage/ConfigManager';
-import { ChatMessage, SessionItem } from '../types';
 import { ollamaChat } from './ollamaChat';
 import { openaiChat } from './openaiChat';
 
@@ -40,7 +40,7 @@ export class SessionManager {
     /** 会话记录数据（数据细节更多，用于存储） */
     static chatSession: SessionItem[] = [];
     /** 当前会话的模型 */
-    static model: Model | undefined;
+    static model: ChatModel | undefined;
     /** 当前模型的显示名称 */
     static name: string = '';
     /** 当前消息的 ID */
@@ -80,7 +80,7 @@ export class SessionManager {
         });
     }
 
-    static pushModelMessage(content: string, reasoning: string){
+    static pushModelMessage(content: string, thinking: string){
         this.chatMessages.push({ 'role': 'assistant', 'content': content});
         this.chatSession.push({
             role: 'assistant',
@@ -89,7 +89,7 @@ export class SessionManager {
             time: new Date().toLocaleString(),
             name: this.name,
             type: this.model?.type,
-            reasoning: reasoning
+            thinking: thinking
         });
     }
     
@@ -121,7 +121,7 @@ export class SessionManager {
                         item.id,
                         item.type as string,
                         item.name as string,
-                        (item.reasoning ?? '') + item.content
+                        (item.thinking ?? (item.reasoning ?? '')) + item.content
                     );
                 }
             }

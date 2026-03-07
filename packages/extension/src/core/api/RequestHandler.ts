@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { l10n } from '../../utils/langUtils';
 import { MessageSender } from './MessageSender';
-import { Configuration } from '../../utils/Configuration';
+import { Configuration } from './Configuration';
 import { ConfigManager } from '../../storage/ConfigManager';
 import { RepoContext } from '../../chat/RepoContext';
 import { SessionManager } from '../../chat/SessionManager';

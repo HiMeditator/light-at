@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { l10n } from '../utils/langUtils';
 import { ChatHistoryManager } from '../storage/ChatHistoryManager';
 
-export function loadSession() {
+export function sessionQuickPick() {
     const quickPick = vscode.window.createQuickPick();
     let sessionItems = [];
     for (let i = ChatHistoryManager.manifest.length - 1; i >= 0; i--){

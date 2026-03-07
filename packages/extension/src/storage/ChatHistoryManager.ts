@@ -1,11 +1,10 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
-// import { l10n } from 'vscode';
+import type { MainifestItem } from '../types';
 import { l10n } from '../utils/langUtils';
-import { Configuration } from '../utils/Configuration';
 import { getTimeStr } from '../utils/commonUtils';
-import { MainifestItem } from '../types/ChatTypes';
-import { GlobalConfig } from '../core/data';
+import { GlobalConfig } from '../data';
+import { Configuration } from '../core/api/Configuration';
 import { SessionManager } from '../chat/SessionManager';
 
 export class ChatHistoryManager {

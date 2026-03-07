@@ -3,7 +3,7 @@ import { RepoContext } from '../../chat/RepoContext';
 import { ConfigManager } from '../../storage/ConfigManager';
 import { ChatHistoryManager } from '../../storage/ChatHistoryManager';
 import { LangDict } from "../../utils/langUtils";
-import { GlobalContext } from '../data';
+import { GlobalContext } from '../../data';
 
 export function initModules(context: vscode.ExtensionContext) {
     GlobalContext.init(context);
