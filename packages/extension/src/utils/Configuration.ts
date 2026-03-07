@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { MessageSender } from '../utils/MessageSender';
+import { MessageSender } from '../core/api/MessageSender';
 
 interface Settings {
     welcomeInfo: boolean;

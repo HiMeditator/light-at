@@ -1,13 +1,12 @@
 import * as vscode from 'vscode';
-// import { l10n } from 'vscode';
-import { l10n } from '../utils/LangDict';
-import { SessionManifest } from '../storage/SessionManifest';
+import { l10n } from '../utils/langUtils';
+import { ChatHistoryManager } from '../storage/ChatHistoryManager';
 
-export function loadSession(sessionManifest: SessionManifest) {
+export function loadSession() {
     const quickPick = vscode.window.createQuickPick();
     let sessionItems = [];
-    for (let i = sessionManifest.manifest.length - 1; i >= 0; i--){
-        const session = sessionManifest.manifest[i];
+    for (let i = ChatHistoryManager.manifest.length - 1; i >= 0; i--){
+        const session = ChatHistoryManager.manifest[i];
         sessionItems.push({
             label: session.overview,
             description: `$(clock) ${session.update}  $(folder) ${session.workspace}`,
@@ -18,16 +17,16 @@ export function loadSession(sessionManifest: SessionManifest) {
     quickPick.items = sessionItems;
     quickPick.onDidChangeSelection(selection => {
         if(selection[0]){
-            sessionManifest.loadChatSession(selection[0].detail || '');
+            ChatHistoryManager.loadChatSession(selection[0].detail || '');
             quickPick.dispose();
         }
     });
     quickPick.onDidTriggerItemButton((event) => {
         if (event.button.tooltip === l10n.t('ts.deleteSession')) {
-            sessionManifest.deleteChatSession(event.item.detail || '');
+            ChatHistoryManager.deleteChatSession(event.item.detail || '');
             sessionItems = [];
-            for (let i = sessionManifest.manifest.length - 1; i >= 0; i--){
-                const session = sessionManifest.manifest[i];
+            for (let i = ChatHistoryManager.manifest.length - 1; i >= 0; i--){
+                const session = ChatHistoryManager.manifest[i];
                 sessionItems.push({
                     label: session.overview,
                     description: `$(clock) ${session.update}  $(folder) ${session.workspace}`,

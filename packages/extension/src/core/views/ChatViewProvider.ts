@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
-import { MessageSender} from '../utils/MessageSender';
-import { RequestHandler } from '../utils/RequestHandler';
+import { MessageSender} from '../api/MessageSender';
+import { RequestHandler } from '../api/RequestHandler';
 
 export class ChatViewProvider implements vscode.WebviewViewProvider {
     public static readonly viewType = 'light-at.chat';

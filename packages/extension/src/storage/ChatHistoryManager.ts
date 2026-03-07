@@ -1,28 +1,26 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 // import { l10n } from 'vscode';
-import { l10n } from '../utils/LangDict';
+import { l10n } from '../utils/langUtils';
 import { Configuration } from '../utils/Configuration';
-import { getTimeStr } from '../utils/common';
+import { getTimeStr } from '../utils/commonUtils';
 import { MainifestItem } from '../types/ChatTypes';
-import { RequestModel } from '../chat/RequestModel';
+import { GlobalConfig, GlobalData } from '../core/data';
 
-export class SessionManifest {
-    manifest: MainifestItem[] = [];
-    sessionName: string;
-    constructor(
-        public sessionDir: vscode.Uri,
-        public manifestUri: vscode.Uri,
-        public requestModel: RequestModel
-    ){
-        if(!fs.existsSync(this.sessionDir.fsPath)){
-            fs.mkdirSync(this.sessionDir.fsPath, {recursive: true});
+
+export class ChatHistoryManager {
+    static manifest: MainifestItem[] = [];
+    static sessionName: string;
+    
+    static init(){
+        if(!fs.existsSync(GlobalConfig.sessionDir.fsPath)){
+            fs.mkdirSync(GlobalConfig.sessionDir.fsPath, {recursive: true});
         }
-        if(!fs.existsSync(this.manifestUri.fsPath)){
-            fs.writeFileSync(this.manifestUri.fsPath, `[]`);
+        if(!fs.existsSync(GlobalConfig.manifestUri.fsPath)){
+            fs.writeFileSync(GlobalConfig.manifestUri.fsPath, `[]`);
         }
         try{
-            this.manifest = JSON.parse(fs.readFileSync(manifestUri.fsPath, 'utf8'));
+            this.manifest = JSON.parse(fs.readFileSync(GlobalConfig.manifestUri.fsPath, 'utf8'));
         }
         catch (error) {
             this.manifest = [];
@@ -31,20 +29,20 @@ export class SessionManifest {
         // console.log(this.manifest);
     }
 
-    public newChatSession(saveSesion = true){
-        if(this.requestModel.isRequesting){
+    static newChatSession(saveSesion = true){
+        if(GlobalData.isStreaming){
             vscode.window.showInformationMessage(l10n.t('ts.fetchingModelInfo'));
             return;
         }
         if(saveSesion){
             this.saveChatSession();
         }
+        GlobalData.clearAndNewChatSession();
         this.sessionName = `${getTimeStr()}.json`;
-        this.requestModel.clearChatSession();
     }
 
-    public deleteChatSession(fileName: string){
-        const filePath = vscode.Uri.joinPath(this.sessionDir, fileName);
+    static deleteChatSession(fileName: string){
+        const filePath = vscode.Uri.joinPath(GlobalConfig.sessionDir, fileName);
         try{
             fs.unlinkSync(filePath.fsPath);
         }
@@ -61,30 +59,30 @@ export class SessionManifest {
         }
     }
 
-    public saveManifest(){
+    static saveManifest(){
         fs.writeFileSync(
-            this.manifestUri.fsPath,
+            GlobalConfig.manifestUri.fsPath,
             JSON.stringify(this.manifest, null, 2)
         );
     }
     
-    public saveChatSession(){
-        if(this.requestModel.chatMessages.length > 0) {
-            const lastMessage = this.requestModel.chatMessages[this.requestModel.chatMessages.length - 1];
+    static saveChatSession(){
+        if(GlobalData.chatMessages.length > 0) {
+            const lastMessage = GlobalData.chatMessages[GlobalData.chatMessages.length - 1];
             if(lastMessage.role === 'user'){
-                this.requestModel.chatMessages.pop();
-                this.requestModel.chatSession.pop();
+                GlobalData.chatMessages.pop();
+                GlobalData.chatSession.pop();
             }
         }
-        if(this.requestModel.chatSession.length <= 1) {
+        if(GlobalData.chatSession.length <= 1) {
             this.deleteChatSession(this.sessionName);
             return;
         }
 
-        const filePath = vscode.Uri.joinPath(this.sessionDir, this.sessionName);
+        const filePath = vscode.Uri.joinPath(GlobalConfig.sessionDir, this.sessionName);
         fs.writeFileSync(
             filePath.fsPath,
-            JSON.stringify(this.requestModel.chatSession, null, 2)
+            JSON.stringify(GlobalData.chatSession, null, 2)
         );
 
         let inManifest = false;
@@ -92,9 +90,9 @@ export class SessionManifest {
             if(this.sessionName === this.manifest[i].name){
                 this.manifest[i].workspace = vscode.workspace.workspaceFolders?.[0].uri.fsPath || '';
                 this.manifest[i].update = new Date().toLocaleString();
-                let content = this.requestModel.chatSession[0].content;
-                if(this.requestModel.chatSession[0].role === 'system'){
-                    content = this.requestModel.chatSession[1].content;
+                let content = GlobalData.chatSession[0].content;
+                if(GlobalData.chatSession[0].role === 'system'){
+                    content = GlobalData.chatSession[1].content;
                 }
                 if(content.length > 64){
                     content = content.substring(0, 64) + '...';
@@ -105,9 +103,9 @@ export class SessionManifest {
             }
         }
         if(!inManifest){
-            let content = this.requestModel.chatSession[0].content;
-            if(this.requestModel.chatSession[0].role === 'system'){
-                content = this.requestModel.chatSession[1].content;
+            let content = GlobalData.chatSession[0].content;
+            if(GlobalData.chatSession[0].role === 'system'){
+                content = GlobalData.chatSession[1].content;
             }
             if(content.length > 64){
                 content = content.substring(0, 64) + '...';
@@ -123,15 +121,15 @@ export class SessionManifest {
         this.sessionName = `${getTimeStr()}.json`;
     }
 
-    public loadLastChatSession(){
+    static loadLastChatSession(){
         if(this.manifest.length === 0) {
             return;
         }
         this.loadChatSession(this.manifest[this.manifest.length - 1].name, true);
     }
 
-    public loadChatSession(fileName: string, newLoad = false){
-        if(this.requestModel.isRequesting){
+    static loadChatSession(fileName: string, newLoad = false){
+        if(GlobalData.isStreaming){
             vscode.window.showInformationMessage(l10n.t('ts.fetchingModelInfo'));
             return;
         }
@@ -147,14 +145,14 @@ export class SessionManifest {
             }
         }
         this.sessionName = fileName;
-        const filePath = vscode.Uri.joinPath(this.sessionDir, fileName);
-        this.requestModel.loadChatSession(filePath.fsPath);
+        const filePath = vscode.Uri.joinPath(GlobalConfig.sessionDir, fileName);
+        GlobalData.loadChatSession(filePath.fsPath);
     }
 
-    public syncManifestWithFiles(){
+    static syncManifestWithFiles(){
         const sessionFiles: string[] = [];
         try {
-            const entries = fs.readdirSync(this.sessionDir.fsPath);
+            const entries = fs.readdirSync(GlobalConfig.sessionDir.fsPath);
             for(const entry of entries){
                 if(entry.endsWith('.json') && entry !== 'manifest.json'){
                     sessionFiles.push(entry);
@@ -171,7 +169,7 @@ export class SessionManifest {
 
         for(const file of sessionFiles){
             if(!this.manifest.find(item => item.name === file)){
-                const filePath = vscode.Uri.joinPath(this.sessionDir, file);
+                const filePath = vscode.Uri.joinPath(GlobalConfig.sessionDir, file);
                 let content = '';
                 try {
                     content = JSON.parse(fs.readFileSync(filePath.fsPath, 'utf8'))[0]['content'];
@@ -191,7 +189,7 @@ export class SessionManifest {
         const maxNum = Configuration.get<number>('maxChatHistory') || 128;
         if(maxNum < 0) { return; }
         while(this.manifest.length > maxNum){
-            const delPath = vscode.Uri.joinPath(this.sessionDir, this.manifest[0].name);
+            const delPath = vscode.Uri.joinPath(GlobalConfig.sessionDir, this.manifest[0].name);
             fs.unlinkSync(delPath.fsPath);
             this.manifest.shift();
         }

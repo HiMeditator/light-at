@@ -3,15 +3,16 @@ import * as fs from 'fs';
 import * as os from 'os';
 import { Ollama } from 'ollama';
 import OpenAI from 'openai';
-// import { l10n } from 'vscode';
-import { l10n } from '../utils/LangDict';
-import { nanoid } from '../utils/common';
+import { l10n } from '../utils/langUtils';
+import { nanoid } from '../utils/commonUtils';
 import { Model } from '../types/ConfigTypes';
-import { ChatMessage, SessionItem } from '../types/ChatTypes';
+import { GlobalData } from '../core/data';
+import { SessionItem } from '../types';
 import { RepoContext } from './RepoContext';
 import { Configuration } from '../utils/Configuration';
-import { MessageSender } from '../utils/MessageSender';
-import { ConfigModels } from '../storage/ConfigModels';
+import { MessageSender } from '../core/api/MessageSender';
+import { ConfigManager } from '../storage/ConfigManager';
+
 
 const DEFAULT_SYSTEM_PROMPT = `
 You are Light At, an intelligent chat assistant integrated within the IDE.
@@ -32,25 +33,19 @@ Note that after the user's request, they may attach selected text snippets or co
 - For complete files, it begins with [FILE_START <file_path>] and ends with [FILE_END]. Here, <file_path> represents the absolute path of the file.
 `.trim();
 
-export class RequestModel {
-    chatMessages: ChatMessage[] = [];
-    chatSession: SessionItem[] = [];
-    model: Model | undefined;
-    name: string = '';
-    messageID: string = '';
-    isRequesting: boolean = false;
-    stopSign: boolean = false;
-    constructor(
-        public configModels: ConfigModels,
-        public repoContext: RepoContext
-    ) { }
 
-    public pushSystemMessage(content: string){
-        this.chatMessages.push({
+export class RequestModel {
+    static model: Model | undefined;
+    static name: string = '';
+    static messageID: string = '';
+    static stopSign: boolean = false;
+
+    static pushSystemMessage(content: string){
+        GlobalData.chatMessages.push({
             role: 'system',
             content: content
         });
-        this.chatSession.push({
+        GlobalData.chatSession.push({
             role: 'system',
             id: '',
             content: content,
@@ -60,13 +55,14 @@ export class RequestModel {
         });
     }
 
-    public pushUserMessage(content: string, contextStr: string){
-        const contextPrompt = this.repoContext.getContextPrompt(contextStr);
-        this.chatMessages.push({
+    static pushUserMessage(content: string, contextStr: string){
+        const contextList: string[] = JSON.parse(contextStr);
+        const contextPrompt = RepoContext.getContextPrompt(contextList);
+        GlobalData.chatMessages.push({
             role: 'user',
             content: content + contextPrompt
         });
-        this.chatSession.push({
+        GlobalData.chatSession.push({
             role: 'user',
             id: this.messageID,
             content: content,
@@ -76,9 +72,9 @@ export class RequestModel {
         });
     }
 
-    public pushModelMessage(content: string, reasoning: string){
-        this.chatMessages.push({ 'role': 'assistant', 'content': content});
-        this.chatSession.push({
+    static pushModelMessage(content: string, reasoning: string){
+        GlobalData.chatMessages.push({ 'role': 'assistant', 'content': content});
+        GlobalData.chatSession.push({
             role: 'assistant',
             id: this.messageID,
             content: content,
@@ -89,54 +85,26 @@ export class RequestModel {
         });
     }
 
-    public loadChatSession(fileName: string){
-        this.clearChatSession();
-        try{
-            const loadSession: SessionItem[] = JSON.parse(fs.readFileSync(fileName, 'utf8'));
-            for(const item of loadSession){
-                this.chatMessages.push({
-                    role: item.role,
-                    content: item.content + (item.context ?? '')
-                });
-                this.chatSession.push(item);
-                if(item.role === 'user'){
-                    MessageSender.requestLoad(
-                        item.id,
-                        item.content,
-                        item.contextList ?? '[]'
-                    );
-                }
-                else if(item.role === 'assistant'){
-                    MessageSender.responseLoad(
-                        item.id,
-                        item.type as string,
-                        item.name as string,
-                        (item.reasoning ?? '') + item.content
-                    );
-                }
-            }
-        }
-        catch(error) {
-            vscode.window.showErrorMessage(`${l10n.t('ts.loadChatSessionError')} ${error}`);
-        }
+    static loadChatSession(fileName: string){
+        GlobalData.loadChatSession(fileName);
     }
 
-    public handleStop(){
-        if(!this.isRequesting) { return; }
+    static handleStop(){
+        if(!GlobalData.isStreaming) { return; }
         this.stopSign = true;
     }
 
-    public async handleRequest(request: string, contextStr: string){
+    static async handleRequest(request: string, contextStr: string){
         if(!nanoid) {
             vscode.window.showErrorMessage('nanoid is not loaded');
             return;
         }
-        if(this.isRequesting) {
+        if(GlobalData.isStreaming) {
             vscode.window.showInformationMessage(l10n.t('ts.fetchingModelInfo'));
             return;
         }
         this.stopSign = false;
-        this.model = this.configModels.getModel();
+        this.model = ConfigManager.getModel();
         if(!this.model){
             vscode.window.showInformationMessage(l10n.t('ts.modelNotSelected'));
             return;
@@ -144,7 +112,7 @@ export class RequestModel {
         this.name = this.model.title ? this.model.title : this.model.model;
         this.messageID = nanoid();
         MessageSender.requestLoad(this.messageID, request, contextStr);
-        if(this.chatMessages.length === 0){
+        if(GlobalData.chatMessages.length === 0){
             if(this.model.system) {
                 this.pushSystemMessage(this.model.system);
             }
@@ -153,7 +121,7 @@ export class RequestModel {
             }
         }
         this.pushUserMessage(request, contextStr);
-        this.isRequesting = true;
+        GlobalData.isStreaming = true;
         if(this.model.type === 'ollama'){
             this.requestOllama();
         }
@@ -165,7 +133,7 @@ export class RequestModel {
         }
     }
 
-    public async requestOllama(){
+    static async requestOllama(){
         let ollama;
         if(this.model?.host){
             ollama = new Ollama({
@@ -178,13 +146,13 @@ export class RequestModel {
         let responseContent = '';
         let reasoning = '';
         const continuousChat = Configuration.get<boolean>('continuousChat');
-        let messages = this.chatMessages;
+        let messages = GlobalData.chatMessages;
         if(!continuousChat) {
             messages = [];
-            if(this.chatMessages[0].role === 'system'){
-                messages.push(this.chatMessages[0]);
+            if(GlobalData.chatMessages[0].role === 'system'){
+                messages.push(GlobalData.chatMessages[0]);
             }
-            messages.push(this.chatMessages[this.chatMessages.length - 1]);
+            messages.push(GlobalData.chatMessages[GlobalData.chatMessages.length - 1]);
         }
         MessageSender.responseNew(this.messageID, 'ollama', this.name);
         try{
@@ -205,7 +173,7 @@ export class RequestModel {
                     MessageSender.responseEnd(this.messageID);
                     this.pushModelMessage(responseContent, reasoning);
                     this.stopSign = false;
-                    this.isRequesting = false;
+                    GlobalData.isStreaming = false;
                     return;
                 }
             }
@@ -215,7 +183,7 @@ export class RequestModel {
             MessageSender.responseEnd(this.messageID);
             this.pushModelMessage(`${error}`, reasoning);
             this.stopSign = false;
-            this.isRequesting = false;
+            GlobalData.isStreaming = false;
             return;
         }
         MessageSender.responseEnd(this.messageID);
@@ -226,23 +194,23 @@ export class RequestModel {
         }
         this.pushModelMessage(responseContent, reasoning);
         this.stopSign = false;
-        this.isRequesting = false;
+        GlobalData.isStreaming = false;
     }
 
-    public async requestOpenAI(openrouter: boolean = false) {
+    static async requestOpenAI(openrouter: boolean = false) {
         let responseContent = '';
         let reasoning = '';
         let isReasoning = false;
         let prompt_tokens = 0;
         let completion_tokens = 0;
         const continuousChat = Configuration.get<boolean>('continuousChat');
-        let messages = this.chatMessages;
+        let messages = GlobalData.chatMessages;
         if(!continuousChat) {
             messages = [];
-            if(this.chatMessages[0].role === 'system'){
-                messages.push(this.chatMessages[0]);
+            if(GlobalData.chatMessages[0].role === 'system'){
+                messages.push(GlobalData.chatMessages[0]);
             }
-            messages.push(this.chatMessages[this.chatMessages.length - 1]);
+            messages.push(GlobalData.chatMessages[GlobalData.chatMessages.length - 1]);
         }
         MessageSender.responseNew(this.messageID, openrouter ? 'openrouter' : 'openai', this.name);
         try {
@@ -295,7 +263,7 @@ export class RequestModel {
                     MessageSender.responseEnd(this.messageID);
                     this.pushModelMessage(responseContent, reasoning);
                     this.stopSign = false;
-                    this.isRequesting = false;
+                    GlobalData.isStreaming = false;
                     return;
                 }
             }
@@ -305,7 +273,7 @@ export class RequestModel {
             MessageSender.responseEnd(this.messageID);
             this.pushModelMessage(`${error}`, reasoning);
             this.stopSign = false;
-            this.isRequesting = false;
+            GlobalData.isStreaming = false;
             return;
         }
         if( Configuration.get<boolean>('displayTokensUsage')){
@@ -316,23 +284,23 @@ export class RequestModel {
         }
         this.pushModelMessage(responseContent, reasoning);
         this.stopSign = false;
-        this.isRequesting = false;
+        GlobalData.isStreaming = false;
     }
 
-    public deleteDialog(requestID: string) {
-        if(requestID === this.messageID && this.isRequesting) {
+    static deleteDialog(requestID: string) {
+        if(requestID === this.messageID && GlobalData.isStreaming) {
             vscode.window.showInformationMessage(l10n.t('ts.fetchingModelInfo'));
             return;
         }
-        for(let i= 0; i < this.chatSession.length; i++){
-            if(this.chatSession[i].id === requestID){
-                if(i+1 < this.chatSession.length && this.chatSession[i+1].id === requestID){
-                    this.chatSession.splice(i, 2);
-                    this.chatMessages.splice(i, 2);
+        for(let i= 0; i < GlobalData.chatSession.length; i++){
+            if(GlobalData.chatSession[i].id === requestID){
+                if(i+1 < GlobalData.chatSession.length && GlobalData.chatSession[i+1].id === requestID){
+                    GlobalData.chatSession.splice(i, 2);
+                    GlobalData.chatMessages.splice(i, 2);
                 }
                 else {
-                    this.chatSession.splice(i, 1);
-                    this.chatMessages.splice(i, 1);
+                    GlobalData.chatSession.splice(i, 1);
+                    GlobalData.chatMessages.splice(i, 1);
                 }
                 break;
             }
@@ -340,9 +308,7 @@ export class RequestModel {
         MessageSender.dialogDeleted(requestID);
     }
 
-    public clearChatSession(){
-        this.chatMessages = [];
-        this.chatSession = [];
-        MessageSender.chatNew();
+    static clearAndNewChatSession(){
+        GlobalData.clearAndNewChatSession();
     }
 }
