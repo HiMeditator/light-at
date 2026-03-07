@@ -1,18 +1,13 @@
 import * as vscode from 'vscode';
-// import { l10n } from 'vscode';
-import { l10n } from '../utils/LangDict';
-import { MessageSender } from '../utils/MessageSender';
-import { Configuration } from '../utils/Configuration';
-import { ConfigModels } from '../storage/ConfigModels';
-import { RepoContext } from '../chat/RepoContext';
-import { RequestModel } from '../chat/RequestModel';
-import { SessionManifest } from '../storage/SessionManifest';
+import { l10n } from '../../utils/langUtils';
+import { MessageSender } from './MessageSender';
+import { Configuration } from './Configuration';
+import { ConfigManager } from '../../storage/ConfigManager';
+import { RepoContext } from '../../chat/RepoContext';
+import { SessionManager } from '../../chat/SessionManager';
+import { ChatHistoryManager } from '../../storage/ChatHistoryManager';
 
 export class RequestHandler {
-    public static configModels: ConfigModels | undefined;
-    public static repoContext: RepoContext | undefined;
-    public static requestModel: RequestModel | undefined;
-    public static sessionManifest: SessionManifest | undefined;
 
     public static handleRequest(message: any) {
         // console.log('Plugin receive:', JSON.stringify(message));
@@ -53,44 +48,44 @@ export class RequestHandler {
     private static prepareInit(){
         MessageSender.languageSet();
         if(Configuration.get<boolean>('loadLastChatSession')){
-            RequestHandler.sessionManifest?.loadLastChatSession();
+            ChatHistoryManager.loadLastChatSession();
         }
         Configuration.sendSettings();
-        RequestHandler.configModels?.updateModelsFromConfig();
+        ConfigManager.updateModelsFromConfig();
     }
 
     private static updateModelID(modelID: string){
-        RequestHandler.configModels?.updatemodelID(modelID);
+        ConfigManager.updatemodelID(modelID);
     }
 
     private static updateConfig(){
-        RequestHandler.configModels?.updateModelsFromConfig();
+        ConfigManager.updateModelsFromConfig();
         vscode.commands.executeCommand('light-at.goto.config');
     }
 
     private static addModel(model: string){
-       RequestHandler.configModels?.addModelToConfig(model);
+       ConfigManager.addModelToConfig(model);
     }
 
     private static deleteModel(modelID: string){
-        RequestHandler.configModels?.deleteModelFromConfig(modelID);
+        ConfigManager.deleteModelFromConfig(modelID);
     }
 
     private static handelRequest(request: string, context: string){
-        RequestHandler.requestModel?.handleRequest(request, context);
+        SessionManager.handleRequest(request, context);
     }
 
     private static deleteDialog(requestID: string){
-        RequestHandler.requestModel?.deleteDialog(requestID);
+        SessionManager.deleteDialog(requestID);
     }
 
     private static responseStop(){
-        RequestHandler.requestModel?.handleStop();
+        SessionManager.stopStreaming();
     }
 
     private static contextGet(){
-        const context = RequestHandler.repoContext?.getContextListAsString();
-        MessageSender.contextSend(context ?? '');
+        const contextList = RepoContext.getContextList();
+        MessageSender.contextSend(JSON.stringify(contextList));
     }
 
     private static async contextGoto(contextPath: string){

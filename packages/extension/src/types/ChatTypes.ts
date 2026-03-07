@@ -12,7 +12,8 @@ export interface SessionItem {
     time: string;
     name?: string;
     type?: 'ollama' | 'openai' | 'openrouter';
-    reasoning?: string;
+    thinking?: string;
+    reasoning?: string; // deprecated
 }
 
 export interface MainifestItem {

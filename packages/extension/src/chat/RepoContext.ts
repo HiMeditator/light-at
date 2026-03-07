@@ -6,19 +6,20 @@ interface TextEditorMap {
 }
 
 export class RepoContext {
-    selectedContent: string = '';
-    activeEditor: vscode.TextEditor | undefined;
-    includeTextEditors:TextEditorMap = {};
-    contextItems: string[] = [];
+    static selectedContent: string = '';
+    static activeEditor: vscode.TextEditor | undefined;
+    static includeTextEditors:TextEditorMap = {};
+    static contextItems: string[] = [];
 
-    constructor() {
+    static init() {
         const TextEditors = vscode.window.visibleTextEditors;
         for(const editor of TextEditors){
             this.includeTextEditors[editor.document.uri.fsPath] = editor;
         }
     }
 
-    public getContextListAsString(): string {
+    /** 获取上下文列表 */
+    static getContextList(): string[] {
         this.contextItems = [];
         this.activeEditor = vscode.window.activeTextEditor;
         if (this.activeEditor && this.activeEditor.selection) {
@@ -39,11 +40,11 @@ export class RepoContext {
             }
         }
         // console.log(this.contextItems);
-        return JSON.stringify(this.contextItems);
+        return this.contextItems;
     }
 
-    public getContextPrompt(contextStr: string): string{
-        const contextList: string[] = JSON.parse(contextStr);
+    /** 根据上下文列表获取对应的提示词 */
+    static getContextPrompt(contextList: string[]): string{
         let contextPrompt = '';
         for(const context of contextList){
             if(context === '[selected]'){
