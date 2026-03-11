@@ -99,7 +99,7 @@ document.addEventListener('click', (e) => {
 }
 
 .dropup-input:focus-within {
-  border: 1px solid var(--vscode-button-hoverBackground, #5a4579);
+  border: 1px solid var(--vscode-button-hoverBackground, #0258a8);
 }
 
 .dropup-input-content {

@@ -52,8 +52,9 @@ watch(locale, () => {
 </script>
 
 <style scoped>
-.dailog-box {
-  overflow-y: auto;
+.dialog-box {
+  flex: 1;
+  overflow: auto;
   scrollbar-width: thin;
 }
 </style>

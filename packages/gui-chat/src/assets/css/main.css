@@ -1,24 +1,24 @@
 html {
-    box-sizing: border-box;
-    font-size: 13px;
+	box-sizing: border-box;
+	font-size: 13px;
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    font-weight: normal;
-    background-color: var(--vscode-sideBar-background, #f2f2f2);
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	font-weight: normal;
+	background-color: var(--vscode-sideBar-background, #f2f2f2);
 }
 
 p {
-    margin: 0;
-    padding: 0;
+	margin: 0;
+	padding: 0;
 }
 
 img {
-    max-width: 100%;
-    height: auto;
+	max-width: 100%;
+	height: auto;
 }
 
 *:focus {
@@ -47,12 +47,12 @@ button {
 	outline: 1px solid transparent;
 	outline-offset: 2px !important;
 	color: var(--vscode-button-foreground, #ffffff);
-	background: var(--vscode-button-background, #705697);
+	background: var(--vscode-button-background, #005fb8);
 }
 
 button:hover {
 	cursor: pointer;
-	background: var(--vscode-button-hoverBackground, #5a4579);
+	background: var(--vscode-button-hoverBackground, #0258a8);
 }
 
 button:focus {

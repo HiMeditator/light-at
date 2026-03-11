@@ -201,12 +201,12 @@ function cancel() {
 
 .form-radio div:hover {
   color: var(--vscode-button-foreground, #ffffff);
-  background-color: var(--vscode-button-hoverBackground, #5a4579);
+  background-color: var(--vscode-button-hoverBackground, #0258a8);
 }
 
 .form-radio .checked {
   color: var(--vscode-button-foreground, #ffffff);
-  background-color: var(--vscode-button-background, #705697);
+  background-color: var(--vscode-button-background, #005fb8);
 }
 
 .form-entry {
@@ -238,7 +238,7 @@ form textarea {
 form input:focus,
 form textarea:focus {
   outline: none;
-  border: 1px solid var(--vscode-button-hoverBackground, #5a4579);
+  border: 1px solid var(--vscode-button-hoverBackground, #0258a8);
 }
 
 form textarea {

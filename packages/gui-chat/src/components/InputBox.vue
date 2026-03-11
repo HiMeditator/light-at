@@ -5,9 +5,7 @@
       rows="1" :placeholder="$t('input.textarea')"
       ref="taInput" @keydown="handleKeydown"
     ></textarea>
-    <InputLower
-      :sendRequest = "sendRequest"
-    />
+    <InputLower :sendRequest = "sendRequest"/>
   </div>
 </template>
 
@@ -79,7 +77,7 @@ onMounted(() => {
 }
 
 .input-box:focus-within {
-  border: 1px solid var(--vscode-button-hoverBackground, #5a4579);
+  border: 1px solid var(--vscode-button-hoverBackground, #0258a8);
 }
 
 textarea {

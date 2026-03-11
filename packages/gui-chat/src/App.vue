@@ -1,5 +1,5 @@
 <template>
-  <div class="chat-container">
+  <div class="root">
     <DialogBox />
     <div class="sep-line"></div>
     <InputBox />
@@ -18,23 +18,13 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.chat-container {
+.root {
   display: flex;
   flex-direction: column;
   height: 100vh;
 }
 
-.dialog-box {
-  flex: 1;
-  overflow: auto;
-  scrollbar-width: thin;
-}
-
 .sep-line {
-  border-top: 1px solid rgba(128, 128, 128, 0.4);
-}
-
-.input-box {
-  flex-shrink: 0;
+  border-top: 1px solid #9995;
 }
 </style>
