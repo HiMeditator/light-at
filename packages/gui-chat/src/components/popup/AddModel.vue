@@ -82,8 +82,8 @@ import OpenRouter from '@/assets/icons/openrouter.svg?component'
 
 import { ref, toRaw, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { modelAdd } from '@/api/sender'
 import type { ModelConfig } from '@/types'
-import { useSenderStore } from '@/stores/sender'
 
 const props = defineProps<{popupAddModel: () => void}>()
 const modelForm = ref<HTMLFormElement>()
@@ -159,7 +159,7 @@ function submit(e: Event) {
   if(rawModelConfig.system?.trim() === ''){
     delete rawModelConfig.system
   }
-  useSenderStore().modelAdd(JSON.stringify(rawModelConfig))
+  modelAdd(JSON.stringify(rawModelConfig))
   modelForm.value?.reset()
   props.popupAddModel()
 }

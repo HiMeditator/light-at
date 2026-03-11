@@ -61,14 +61,15 @@
 import Ollama from '@/assets/icons/ollama.svg?component'
 import OpenAI from '@/assets/icons/openai.svg?component'
 import OpenRouter from '@/assets/icons/openrouter.svg?component'
-
-import { ref, watch } from 'vue'
-import MarkdownContent from './MarkdownContent.vue'
-import type { ModelDialogItem } from '@/types'
-import { useSenderStore } from '@/stores/sender'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faChevronUp, faChevronDown, faLightbulb } from '@fortawesome/free-solid-svg-icons'
 import { faClipboard, faXmark, faCheck } from '@fortawesome/free-solid-svg-icons'
+import type { ModelDialogItem } from '@/types'
+
+import { ref, watch } from 'vue'
+import MarkdownContent from './MarkdownContent.vue'
+import { dialogDelete } from '@/api/sender'
+
 const props = defineProps<{ dialog: ModelDialogItem }>()
 const isCopied = ref(false);
 
@@ -124,7 +125,7 @@ function copyDialog() {
 }
 
 function deleteDialog() {
-  useSenderStore().dialogDelete(props.dialog.id)
+  dialogDelete(props.dialog.id)
 }
 </script>
 

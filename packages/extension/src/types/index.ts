@@ -1,2 +1,2 @@
-export * from './ChatTypes';
-export * from './ConfigTypes';
+export * from './chat';
+export * from './config';

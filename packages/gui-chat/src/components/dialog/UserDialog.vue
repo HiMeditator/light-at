@@ -20,7 +20,7 @@
           v-for="path in dialog.context"
           :key="path"
         >
-          <span @click="senderStore.contextGoto(path)">
+          <span @click="contextGoto(path)">
             {{
               path === '[selected]' ? $t('input.selected') :
                 path.split('/').pop()?.split('\\').pop()
@@ -37,8 +37,8 @@ import { ref } from 'vue';
 import type { UserDialogItem } from '@/types';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faUser, faClipboard, faCheck } from '@fortawesome/free-solid-svg-icons'
-import { useSenderStore } from '@/stores/sender';
-const senderStore = useSenderStore()
+import { contextGoto } from '@/api/sender';
+
 const props = defineProps<{ dialog: UserDialogItem }>();
 const isCopied = ref(false);
 

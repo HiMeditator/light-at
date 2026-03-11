@@ -9,11 +9,17 @@
 <script setup lang="ts">
 import DialogBox from './components/DialogBox.vue'
 import InputBox from './components/InputBox.vue'
-import { useSenderStore } from './stores/sender'
-import { onMounted } from 'vue'
+import { onMessage } from './api/listener'
+import { initReady } from './api/sender'
+import { onMounted, onUnmounted } from 'vue'
 
 onMounted(() => {
-  useSenderStore().initReady()
+  window.addEventListener('message', onMessage)
+  initReady()
+})
+
+onUnmounted(() => {
+  window.removeEventListener('message', onMessage)
 })
 </script>
 

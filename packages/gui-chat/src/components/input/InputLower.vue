@@ -32,7 +32,7 @@
     </div>
     <div class="send-prompt" @click="sendRequest">
       <span>{{ sendShortcut }}</span>
-      <FontAwesomeIcon v-if="sendDisable" :icon="faSpinner" spin />
+      <FontAwesomeIcon v-if="!canSendRequest" :icon="faSpinner" spin />
       <FontAwesomeIcon v-else :icon="faArrowRight" />
     </div>
   </div>
@@ -55,22 +55,29 @@
 import Ollama from '@/assets/icons/ollama.svg?component';
 import OpenAI from '@/assets/icons/openai.svg?component';
 import OpenRouter from '@/assets/icons/openrouter.svg?component';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faPlus, faRotateRight, faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { faChevronDown, faArrowRight, faXmark } from '@fortawesome/free-solid-svg-icons'
 
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import type { Model } from '@/types'
 import { storeToRefs } from 'pinia'
-import { useListenerStore } from '@/stores/listener'
+import { useAgentStore } from '@/stores/useAgentStore';
+import { useConfigStore } from '@/stores/useConfigStore';
+import { useDialogStore } from '@/stores/useDialogStore';
+import { modelIDUpdate, configUpdate } from '@/api/sender';
 import AddModel from '../popup/AddModel.vue'
 import DeleteModel from '../popup/DeleteModel.vue' 
 
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faPlus, faRotateRight, faSpinner } from '@fortawesome/free-solid-svg-icons'
-import { faChevronDown, faArrowRight, faXmark } from '@fortawesome/free-solid-svg-icons'
-import { useSenderStore } from '@/stores/sender'
+const agentStore = useAgentStore()
+const configStore = useConfigStore()
+const dialogStore = useDialogStore()
+const { models, modelID } = storeToRefs(agentStore)
+const { sendShortcut } = storeToRefs(configStore)
+const { canSendRequest } = storeToRefs(dialogStore)
 
-const listenerStore = useListenerStore()
-const { models, modelID, sendDisable, sendShortcut } = storeToRefs(listenerStore)
+
 const modelName = computed(() => {
   const findModel = models.value.find(model => model.id === modelID.value)
   if (findModel) {
@@ -87,7 +94,6 @@ defineProps<{
 const addModelPopup = ref(false)
 const deleteModelPopup = ref(false)
 const deleteModel = ref<Model>()
-const sendStore = useSenderStore()
 function popupAddModel(){
   addModelPopup.value = !addModelPopup.value
 }
@@ -100,10 +106,10 @@ function popupDeleteModel(model?: Model){
 
 function changeModelID(newID: string) {
   if(newID === modelID.value) return
-  useSenderStore().modelIDUpdate(newID)
+  modelIDUpdate(newID)
 }
 function updateConfig() {
-  sendStore.configUpdate()
+  configUpdate()
 }
 </script>
 

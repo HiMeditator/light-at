@@ -28,8 +28,8 @@
       </div>
       <div 
         class="stop-generation"
-        v-show="sendDisable"
-        @click="sendStore.responseStop()"
+        v-show="!canSendRequest"
+        @click="responseStop()"
       >
         <FontAwesomeIcon :icon="faPause" />
         <span>{{ $t('input.stopGeneration') }}</span>
@@ -50,28 +50,23 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useSenderStore } from '@/stores/sender'
-import { useListenerStore } from '@/stores/listener'
+import { useAgentStore } from '@/stores/useAgentStore'
+import { useDialogStore } from '@/stores/useDialogStore'
+import { contextGet, responseStop } from '@/api/sender'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faPause, faPlus } from '@fortawesome/free-solid-svg-icons'
 
 const displayContext = ref(false)
-const listenerStore = useListenerStore()
-const { sendDisable, contextMap } = storeToRefs(listenerStore)
-const sendStore = useSenderStore()
 const search = ref('')
 
-// contextMap.value = {
-//   'c:data/function.ts': { name: 'function.ts', selected: false },
-//   'c:data/index.ts': { name: 'index.ts', selected: false },
-//   'c:data/utils.ts': { name: 'utils.ts', selected: false },
-//   'c:data/types.ts': { name: 'types.ts', selected: false },
-//   'c:data/test/longlong/config.ts': { name: 'config.ts', selected: false }
-// }
+const agentStore = useAgentStore()
+const dialogStore = useDialogStore()
+const { contextMap } = storeToRefs(agentStore)
+const { canSendRequest } = storeToRefs(dialogStore)
 
 function getContext() {
   if (!displayContext.value) {
-    sendStore.contextGet()
+    contextGet()
   }
   displayContext.value = !displayContext.value
 }

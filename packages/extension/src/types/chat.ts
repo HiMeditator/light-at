@@ -1,17 +1,20 @@
+import { ProviderType } from "./config";
+export type Role = 'system' | 'user' | 'assistant'
+
 export interface ChatMessage {
-    role: 'system' | 'user' | 'assistant';
+    role: Role;
     content: string;
 }
 
 export interface SessionItem {
-    role: 'system' | 'user' | 'assistant';
+    role: Role;
     id: string;
     content: string;
     context?: string;
     contextList?: string;
     time: string;
     name?: string;
-    type?: 'ollama' | 'openai' | 'openrouter';
+    type?: ProviderType;
     thinking?: string;
     reasoning?: string; // deprecated
 }

@@ -16,12 +16,15 @@ import { ref,watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import type { ModelDialogItem} from '@/types'
-import { useListenerStore } from '../stores/listener'
+import { useDialogStore } from '@/stores/useDialogStore'
+import { useConfigStore } from '@/stores/useConfigStore'
 import UserDialog from './dialog/UserDialog.vue'
 import ModelDialog from './dialog/ModelDialog.vue'
 
-const listenerStore = useListenerStore()
-const { dialogs, welcomeInfo } = storeToRefs(listenerStore)
+const configStore = useConfigStore()
+const dialogStore = useDialogStore()
+const { welcomeInfo } = storeToRefs(configStore)
+const { dialogs } = storeToRefs(dialogStore)
 
 const { t, locale } = useI18n()
 const welcomeDialog = ref<ModelDialogItem>({
