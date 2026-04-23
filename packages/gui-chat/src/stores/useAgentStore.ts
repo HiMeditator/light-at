@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import type { Model, ContextMap } from '@/types';
+import type { ModelItem, ContextMap } from '@/types';
 
 export const useAgentStore = defineStore('agent', () => {
-    const models = ref<Model[]>([]);
+    const models = ref<ModelItem[]>([]);
     const modelID = ref<string>('');
     const contextMap = ref<ContextMap>({});
 

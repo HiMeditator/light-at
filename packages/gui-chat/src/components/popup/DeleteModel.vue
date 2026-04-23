@@ -15,11 +15,11 @@
 </template>
 
 <script setup lang="ts">
-import type { Model } from '@/types'
+import type { ModelItem } from '@/types'
 import { modelDelete } from '@/api/sender';
 
 const props = defineProps<{
-  deleteModel: Model | undefined,
+  deleteModel: ModelItem | undefined,
   popupDeleteModel: () => void
 }>();
 

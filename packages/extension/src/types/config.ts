@@ -9,6 +9,7 @@ export interface ChatModel {
     host?: string;
     apiKey?: string;
     system?: string;
+    customParams?: string;
 }
 
 export interface Config {

@@ -61,7 +61,7 @@ import { faChevronDown, faArrowRight, faXmark } from '@fortawesome/free-solid-sv
 
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import type { Model } from '@/types'
+import type { ModelItem } from '@/types'
 import { storeToRefs } from 'pinia'
 import { useAgentStore } from '@/stores/useAgentStore';
 import { useConfigStore } from '@/stores/useConfigStore';
@@ -93,11 +93,11 @@ defineProps<{
 
 const addModelPopup = ref(false)
 const deleteModelPopup = ref(false)
-const deleteModel = ref<Model>()
+const deleteModel = ref<ModelItem>()
 function popupAddModel(){
   addModelPopup.value = !addModelPopup.value
 }
-function popupDeleteModel(model?: Model){
+function popupDeleteModel(model?: ModelItem){
   deleteModelPopup.value = !deleteModelPopup.value
   if(model){
     deleteModel.value = model 

@@ -21,6 +21,26 @@ export async function ollamaChat() {
         ollama = new Ollama();
     }
 
+    let customParams = {};
+    if (SessionManager.model?.customParams) {
+        try {
+            customParams = JSON.parse(SessionManager.model.customParams);
+            let isObject = typeof customParams === 'object' && customParams !== null && !Array.isArray(customParams);
+            if(!isObject) {
+                throw new Error('Custom params must be an object.');
+            }
+        } catch (error) {
+            vscode.window.showErrorMessage(`${l10n.t('ts.invalidCustomParams')} ${error}`);
+            MessageSender.responseNew(SessionManager.messageID, 'ollama', SessionManager.name);
+            MessageSender.responseStream(`**${error}**`, SessionManager.messageID);
+            MessageSender.responseEnd(SessionManager.messageID);
+            SessionManager.pushModelMessage(`**${error}**`, thinking);
+            SessionManager.stopSign = false;
+            SessionManager.isStreaming = false;
+            return;
+        }
+    }
+
     if(!Configuration.get<boolean>('continuousChat')) {
         messages = [];
         if(SessionManager.chatMessages[0].role === 'system'){
@@ -33,6 +53,7 @@ export async function ollamaChat() {
     
     try{
         const stream = await ollama.chat({
+            ...customParams,
             model: SessionManager.model?.model || '',
             messages: messages,
             stream: true
@@ -75,7 +96,7 @@ export async function ollamaChat() {
         vscode.window.showErrorMessage(`${l10n.t('ts.requestFailed')} ${error}`);
         MessageSender.responseStream(`**${error}**`, SessionManager.messageID);
         MessageSender.responseEnd(SessionManager.messageID);
-        SessionManager.pushModelMessage(`${error}`, thinking);
+        SessionManager.pushModelMessage(`**${error}**`, thinking);
         SessionManager.stopSign = false;
         SessionManager.isStreaming = false;
         return;

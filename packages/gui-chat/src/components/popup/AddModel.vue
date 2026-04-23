@@ -35,18 +35,21 @@
         <label for="i-model">*model</label>
         <input type="text" id="i-model" name="model" required
           v-model="modelConfig.model"
+          :placeholder="$t('popup.i_model')"
         >
       </div>
       <div class="form-entry">
         <label for="i-title">title</label>
         <input type="text" id="i-title" name="title"
           v-model="modelConfig.title"
+          :placeholder="$t('popup.i_title')"
         >
       </div>
       <div class="form-entry" v-if="modelConfig.type === 'openai'">
         <label for="i-base_url">*baseURL</label>
         <input type="text" id="i-base_url" name="base_url" required
           v-model="modelConfig.baseURL"
+          :placeholder="$t('popup.i_baseURL')"
         >
       </div>
       <div class="form-entry" v-if="modelConfig.type === 'ollama'">
@@ -54,19 +57,30 @@
         <input type="text" id="i-host" name="host"
           v-model="modelConfig.host"
           pattern="^((http:\/\/)?[\w\/.\-]+:)?[\d]+$"
-          :title="$t('popup.hostNote')"
+          :placeholder="$t('popup.i_host')"
         >
       </div>
       <div class="form-entry" v-if="modelConfig.type === 'openai' || modelConfig.type === 'openrouter'">
         <label for="i-api_key">*apiKey</label>
         <input :type="apiKeyType" id="i-api_key" name="api_key" required
           v-model="modelConfig.apiKey"
+          :placeholder="$t('popup.i_apiKey') + 'env@OPENAI_API_KEY or sk-xxx'"
         >
       </div>
       <div class="form-entry">
         <label for="i-system">prompt</label>
-        <textarea id="i-system" name="system" rows="2" placeholder="system prompt"
+        <textarea id="i-system" name="system" rows="2"
           v-model="modelConfig.system"
+          :placeholder="$t('popup.i_system')"
+        ></textarea>
+      </div>
+      <div class="form-entry">
+        <label for="i-params">params</label>
+        <textarea id="i-params" name="params" rows="3"
+          :class="{ code: true, 'red-border': !isParamsValid, shake: shakeParams }"
+          v-model="modelConfig.customParams"
+          :placeholder="$t('popup.i_params') + getParmsExample()"
+          @animationend="shakeParams = false"
         ></textarea>
       </div>
       <button @click="submit">{{ $t('popup.submit') }}</button>
@@ -80,7 +94,7 @@ import Ollama from '@/assets/icons/ollama.svg?component'
 import OpenAI from '@/assets/icons/openai.svg?component'
 import OpenRouter from '@/assets/icons/openrouter.svg?component'
 
-import { ref, toRaw, computed } from 'vue'
+import { ref, toRaw, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { modelAdd } from '@/api/sender'
 import type { ModelConfig } from '@/types'
@@ -95,8 +109,27 @@ const modelConfig = ref<ModelConfig>({
   baseURL: '',
   host: '',
   apiKey: '',
-  system: ''
+  system: '',
+  customParams: ''
 })
+
+const isParamsValid = ref(true)
+const shakeParams = ref(false)
+
+watch(() => modelConfig.value.customParams, (params) => {
+  if (!params?.trim()) {
+    isParamsValid.value = true
+    return
+  }
+  try {
+    const parsed = JSON.parse(params)
+    isParamsValid.value = typeof parsed === 'object' && parsed !== null && !Array.isArray(parsed)
+  } catch (error) {
+    isParamsValid.value = false
+  }
+})
+
+
 
 const { t } = useI18n()
 const openaiNote = ref(
@@ -130,9 +163,22 @@ let apiKeyType = computed( () => {
   }
 })
 
+function getParmsExample() {
+  if(modelConfig.value.type === 'ollama'){
+    return '{"think": false}'
+  }
+  else{
+    return '{"temperature": 0.8, "enable_thinking": false}'
+  }
+}
+
 function submit(e: Event) {
-  if(!modelForm.value?.checkValidity()) return
   e.preventDefault()
+  if(!modelForm.value?.checkValidity()) return
+  if(!isParamsValid.value) {
+    shakeParams.value = true
+    return
+  }
   let rawModelConfig: ModelConfig = toRaw(modelConfig.value)
   if(rawModelConfig.type === 'ollama'){
     delete rawModelConfig.baseURL
@@ -158,6 +204,9 @@ function submit(e: Event) {
   }
   if(rawModelConfig.system?.trim() === ''){
     delete rawModelConfig.system
+  }
+  if(rawModelConfig.customParams?.trim() === '') {
+    delete rawModelConfig.customParams
   }
   modelAdd(JSON.stringify(rawModelConfig))
   modelForm.value?.reset()
@@ -228,6 +277,7 @@ form label {
 form input,
 form textarea {
   display: inline-block;
+  line-height: 1.6;
   width: calc(90% - min(30%, 60px));
   color: var(--vscode-input-foreground, #616161);
   border-radius: 2px;
@@ -252,5 +302,25 @@ form button {
   padding: 6px;
   width: 36%;
   margin: auto 5px;
+}
+
+.code {
+	font-family: var(--vscode-editor-font-family, Consolas, 'Courier New', monospace);
+}
+
+.red-border {
+  border-color: red !important;
+}
+
+.shake {
+  animation: shake 0.4s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%      { transform: translateX(-6px); }
+  40%      { transform: translateX(6px); }
+  60%      { transform: translateX(-4px); }
+  80%      { transform: translateX(4px); }
 }
 </style>

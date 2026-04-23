@@ -8,7 +8,10 @@
 
 ## 未来计划
 
+> 以下计划将在 Light Agent 项目中实现
+
 - [ ] 将项目由 Light At 改为 Light Agent
+- [ ] 插件端由 CommonJS 转为 ESM
 - [ ] 添加工具调用基座
 - [ ] 添加基础工具调用
 - [ ] 添加 MCP 支持
