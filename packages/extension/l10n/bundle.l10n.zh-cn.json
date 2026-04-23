@@ -8,5 +8,6 @@
     "ts.requestFailed": "请求失败：",
     "ts.invalidCustomParams": "自定义参数解析错误：",
     "ts.contextGotoError": "载入上下文文件失败：",
-    "ts.envKeyNotFound": "找不到对应环境变量，请检查您的环境变量设置，如果无误请重启电脑再次尝试。"
+    "ts.envKeyNotFound": "找不到对应环境变量，请检查您的环境变量设置，如果无误请重启电脑再次尝试。",
+    "ts.imageNotSupported": "图片已从上下文中移除！当前插件仅支持在 Ollama 模型调用时在上下文中添加图片，调用其他模型时请勿添加图片作为上下文。"
 }

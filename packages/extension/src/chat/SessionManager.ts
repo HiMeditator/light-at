@@ -66,16 +66,20 @@ export class SessionManager {
     static pushUserMessage(content: string, contextStr: string){
         const contextList: string[] = JSON.parse(contextStr);
         const contextPrompt = RepoContext.getContextPrompt(contextList);
+        const imageList = RepoContext.getImageList(contextList);
         this.chatMessages.push({
             role: 'user',
-            content: content + contextPrompt
+            content: content + contextPrompt,
+            ...(imageList.length > 0 && { images: imageList })
         });
+
         this.chatSession.push({
             role: 'user',
             id: this.messageID,
             content: content,
             context: contextPrompt,
             contextList: contextStr,
+            ...(imageList.length > 0 && { images: imageList }),
             time: new Date().toLocaleString()
         });
     }
@@ -106,7 +110,8 @@ export class SessionManager {
             for(const item of loadSession){
                 this.chatMessages.push({
                     role: item.role,
-                    content: item.content + (item.context ?? '')
+                    content: item.content + (item.context ?? ''),
+                    ...(item.images && { images: item.images }),
                 });
                 this.chatSession.push(item);
                 if(item.role === 'user'){

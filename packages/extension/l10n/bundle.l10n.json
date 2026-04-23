@@ -8,5 +8,6 @@
     "ts.requestFailed": "Request failed:",
     "ts.invalidCustomParams": "Custom parameters parsing error:",
     "ts.contextGotoError": "Failed to load context file:",
-    "ts.envKeyNotFound": "The corresponding environment variable could not be found. Please check your environment variable settings. If there are no issues, restart your computer and try again."
+    "ts.envKeyNotFound": "The corresponding environment variable could not be found. Please check your environment variable settings. If there are no issues, restart your computer and try again.",
+    "ts.imageNotSupported": "Image has been removed from the context! The current plugin only supports adding images to the context when calling Ollama models. Please do not add images as context when calling other models."
 }

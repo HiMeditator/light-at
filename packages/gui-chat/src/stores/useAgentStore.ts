@@ -8,6 +8,7 @@ export const useAgentStore = defineStore('agent', () => {
     const contextMap = ref<ContextMap>({});
 
     function contextSend(contextStr: string){
+        contextMap.value = {};
         const context = JSON.parse(contextStr);
         for(let item of context){
             const isSelected = contextMap.value[item]?.selected;

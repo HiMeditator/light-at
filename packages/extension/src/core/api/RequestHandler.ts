@@ -88,15 +88,21 @@ export class RequestHandler {
         MessageSender.contextSend(JSON.stringify(contextList));
     }
 
-    private static async contextGoto(contextPath: string){
-        if(contextPath === '[selected]') { return; }
-        try{
-            const context = vscode.Uri.file(contextPath);
+    private static async contextGoto(contextPath: string) {
+        if (contextPath === '[selected]') { return; }
+        const context = vscode.Uri.file(contextPath);
+        
+        try {
             const document = await vscode.workspace.openTextDocument(context);
             await vscode.window.showTextDocument(document);
-        }
-        catch(error){
-            vscode.window.showErrorMessage(`${l10n.t('ts.contextGotoError')} ${contextPath}`);
+        } catch {
+            try {
+                await vscode.commands.executeCommand('vscode.open', context);
+            } catch (error) {
+                vscode.window.showErrorMessage(
+                    `${l10n.t('ts.contextGotoError')} ${contextPath}`
+                );
+            }
         }
     }
 }
