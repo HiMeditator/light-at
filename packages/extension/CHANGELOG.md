@@ -85,3 +85,12 @@ The project has been refactored based on [light-assistant](https://github.com/Hi
 - 优化默认系统提示词
 - 添加 OpenRouter 模型服务
 - 优化界面和模型图标
+
+## v0.4.0
+
+2026-04-23
+
+- 添加自定义模型参数配置
+- 为“添加模型”页面新增表单说明文字
+- 优化模型流式输出的渲染效率
+- 在模型输出时自动滚动到最新内容

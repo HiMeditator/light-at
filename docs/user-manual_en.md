@@ -40,6 +40,8 @@ The configuration format is as follows:
 - `host`: Optional. The host address of the Ollama server, or the localhost port number.
 - `apiKey`: Required if `type` is `openai`. The API key, obtained from your model provider.
 - `system`: Optional. The system prompt for model initialization. If not set, the default system prompt is as follows.
+- `customParams`: Optional. Custom model invocation parameters, formatted as a JSON **string**. These parameters will be injected into the model's API call.
+
 
 ```typescript
 const DEFAULT_SYSTEM_PROMPT = `
@@ -83,14 +85,17 @@ Here is a specific example:
     {
       "id": "deepseek-r1-no.002",
       "type": "ollama",
-      "model": "deepseek-r1"
+      "model": "deepseek-r1",
+      "host": "http://localhost:12345",
+      "customParams": "{\"think\": false}"
     },
     {
       "id": "WyCSP4M3CZluzoNgNCm2k",
       "type": "openai",
       "model": "qwen-max",
       "baseURL": "https://dashscope.aliyuncs.com/compatible-mode/v1",
-      "apiKey": "sk-********************************"
+      "apiKey": "sk-********************************",
+      "customParams": "{\"enable_thinking\": false}"
     },
     {
       "id": "uXPF7fCW2paRZcVyfjURO",

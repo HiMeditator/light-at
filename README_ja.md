@@ -3,7 +3,7 @@
     <h1 align="center">light-at</h1>
     <p>Light At は、VS Code 派生 IDE 向けのプラグインであり、最も純粋な IDE 内大規模モデルテキストチャット機能のみを提供します。</p>
     <p>
-      <a href="https://github.com/HiMeditator/light-at/releases"><img src="https://img.shields.io/badge/release-0.3.0-blue"></a>
+      <a href="https://github.com/HiMeditator/light-at/releases"><img src="https://img.shields.io/badge/release-0.4.0-blue"></a>
       <a href="https://github.com/HiMeditator/light-at/issues"><img src="https://img.shields.io/github/issues/HiMeditator/light-at?color=orange"></a>
       <img src="https://img.shields.io/github/languages/top/HiMeditator/light-at?color=royalblue">
       <img src="https://img.shields.io/github/repo-size/HiMeditator/light-at?color=green">

@@ -1,6 +1,6 @@
 # Light At 用户手册
 
-适用于插件版本 v0.3.0
+适用于插件版本 v0.4.0
 
 - [English Version](user-manual_en.md)
 - [日本語版](user-manual_ja.md)
@@ -26,7 +26,8 @@
       "baseURL": "https://model_base_url",
       "host": "Ollama serve host",
       "apiKey": "sk-* | env@API_KEY",
-      "system": "system prompt"
+      "system": "system prompt",
+      "customParams": "{\"key\": \"value\"}"
     }
   ]
 }
@@ -40,6 +41,7 @@
 - `host`: 可选。Ollama 服务器的主机地址，或者 localhost 的端口号。
 - `apiKey`：若 `type` 为 `openai` 则必须。API 密钥，从您的模型服务商获取。
 - `system`：可选。模型系统提示，用于模型初始化，若不设置，默认系统提示词如下。
+- `customParams`：可选，自定义的模型调用参数，格式为 JSON **字符串**，其中的参数将被注入到模型的 API 调用中。
 
 ```typescript
 const DEFAULT_SYSTEM_PROMPT = `
@@ -84,14 +86,16 @@ Note that after the user's request, they may attach selected text snippets or co
       "id": "deepseek-r1-no.002",
       "type": "ollama",
       "model": "deepseek-r1",
-      "host": "http://localhost:12345"
+      "host": "http://localhost:12345",
+      "customParams": "{\"think\": false}"
     },
     {
       "id": "WyCSP4M3CZluzoNgNCm2k",
       "type": "openai",
       "model": "qwen-max",
       "baseURL": "https://dashscope.aliyuncs.com/compatible-mode/v1",
-      "apiKey": "sk-********************************"
+      "apiKey": "sk-********************************",
+      "customParams": "{\"enable_thinking\": false}"
     },
     {
       "id": "uXPF7fCW2paRZcVyfjURO",

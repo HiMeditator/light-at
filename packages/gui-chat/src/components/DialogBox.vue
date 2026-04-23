@@ -1,5 +1,5 @@
 <template>
-  <div class="dialog-box">
+  <div class="dialog-box" ref="scrollBox" @scroll="onScroll">
     <ModelDialog
       v-show="!dialogs.length && welcomeInfo"
       :dialog="welcomeDialog"
@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref,watch } from 'vue'
+import { ref, watch, nextTick } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import type { ModelDialogItem} from '@/types'
@@ -50,8 +50,26 @@ watch(locale, () => {
     type: undefined,
     name: t('dialog.pluginName')
   }
-  // console.log(welcomeDialog.value.content)
 })
+
+const scrollBox = ref<HTMLElement>()
+let isAtBottom = true
+
+function onScroll() {
+  if (!scrollBox.value) return
+  const el = scrollBox.value
+  isAtBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 30
+}
+
+function scrollToBottom() {
+  if (isAtBottom && scrollBox.value) {
+    scrollBox.value.scrollTop = scrollBox.value.scrollHeight
+  }
+}
+
+watch(dialogs, () => {
+  nextTick(scrollToBottom)
+}, { deep: true })
 </script>
 
 <style scoped>
