@@ -1,5 +1,5 @@
 <template>
-  <div class="chat-container">
+  <div class="root">
     <DialogBox />
     <div class="sep-line"></div>
     <InputBox />
@@ -9,32 +9,28 @@
 <script setup lang="ts">
 import DialogBox from './components/DialogBox.vue'
 import InputBox from './components/InputBox.vue'
-import { useSenderStore } from './stores/sender'
-import { onMounted } from 'vue'
+import { onMessage } from './api/listener'
+import { initReady } from './api/sender'
+import { onMounted, onUnmounted } from 'vue'
 
 onMounted(() => {
-  useSenderStore().initReady()
+  window.addEventListener('message', onMessage)
+  initReady()
+})
+
+onUnmounted(() => {
+  window.removeEventListener('message', onMessage)
 })
 </script>
 
 <style scoped>
-.chat-container {
+.root {
   display: flex;
   flex-direction: column;
   height: 100vh;
 }
 
-.dialog-box {
-  flex: 1;
-  overflow: auto;
-  scrollbar-width: thin;
-}
-
 .sep-line {
-  border-top: 1px solid rgba(128, 128, 128, 0.4);
-}
-
-.input-box {
-  flex-shrink: 0;
+  border-top: 1px solid #9995;
 }
 </style>

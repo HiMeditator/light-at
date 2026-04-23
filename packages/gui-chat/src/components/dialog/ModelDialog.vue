@@ -38,13 +38,13 @@
         v-if="hasThinking"
       >
         <template v-if="showThinking">
-          <MarkdownContent :content="thinking" />
+          <MarkdownContent :content="thinking" :isStreaming="isStreaming" />
         </template>
         <template v-else>
           {{ thinking }}
         </template>
       </div>
-      <MarkdownContent :content="content" />
+      <MarkdownContent :content="content" :isStreaming="isStreaming" />
       <div class="div-tokens" v-if=" (dialog.prompt_tokens && dialog.completion_tokens)">
         <span :title="$t('dialog.prompt_tokens')">
           prompt_tokens: {{ dialog.prompt_tokens }}
@@ -61,15 +61,20 @@
 import Ollama from '@/assets/icons/ollama.svg?component'
 import OpenAI from '@/assets/icons/openai.svg?component'
 import OpenRouter from '@/assets/icons/openrouter.svg?component'
-
-import { ref, watch } from 'vue'
-import MarkdownContent from './MarkdownContent.vue'
-import type { ModelDialogItem } from '@/types'
-import { useSenderStore } from '@/stores/sender'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faChevronUp, faChevronDown, faLightbulb } from '@fortawesome/free-solid-svg-icons'
 import { faClipboard, faXmark, faCheck } from '@fortawesome/free-solid-svg-icons'
+import type { ModelDialogItem } from '@/types'
+
+import { ref, watch } from 'vue'
+import { storeToRefs } from 'pinia'
+import MarkdownContent from './MarkdownContent.vue'
+import { dialogDelete } from '@/api/sender'
+import { useDialogStore } from '@/stores/useDialogStore'
+
 const props = defineProps<{ dialog: ModelDialogItem }>()
+const dialogStore = useDialogStore()
+const { isStreaming } = storeToRefs(dialogStore)
 const isCopied = ref(false);
 
 const hasThinking = ref(false)
@@ -124,7 +129,7 @@ function copyDialog() {
 }
 
 function deleteDialog() {
-  useSenderStore().dialogDelete(props.dialog.id)
+  dialogDelete(props.dialog.id)
 }
 </script>
 
@@ -235,6 +240,6 @@ function deleteDialog() {
 }
 
 .div-tokens span:hover {
-  border: 1px solid var(--vscode-button-hoverBackground, #5a4579);
+  border: 1px solid var(--vscode-button-hoverBackground, #0258a8);
 }
 </style>

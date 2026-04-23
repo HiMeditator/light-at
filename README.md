@@ -3,7 +3,7 @@
     <h1 align="center">light-at</h1>
     <p>Light At 是一款适用于 VS Code 衍生 IDE 的插件，仅提供最纯粹的 IDE 内大模型文本聊天功能。</p>
     <p>
-      <a href="https://github.com/HiMeditator/light-at/releases"><img src="https://img.shields.io/badge/release-0.3.0-blue"></a>
+      <a href="https://github.com/HiMeditator/light-at/releases"><img src="https://img.shields.io/badge/release-0.4.0-blue"></a>
       <a href="https://github.com/HiMeditator/light-at/issues"><img src="https://img.shields.io/github/issues/HiMeditator/light-at?color=orange"></a>
       <img src="https://img.shields.io/github/languages/top/HiMeditator/light-at?color=royalblue">
       <img src="https://img.shields.io/github/repo-size/HiMeditator/light-at?color=green">

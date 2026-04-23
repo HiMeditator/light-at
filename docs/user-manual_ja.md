@@ -39,6 +39,7 @@
 - `baseURL`：`type` が `openai` の場合必須。API リクエストのベース URL で、モデル提供者によります。
 - `host`：オプション。Ollama サーバーのホストアドレス、またはlocalhost のポート番号。
 - `apiKey`：`type` が `openai` の場合必須。API キーはモデル提供者から取得してください。
+- `customParams`：オプション。カスタムモデル呼び出しパラメータ。JSON **文字列**形式で、指定されたパラメータはモデルの API 呼び出しに注入されます。
 
 > **注意:** `apiKey` フィールドには、環境変数を使用できます。設定形式は次のとおりです：`env@API_KEY_NAME` ここで、`API_KEY_NAME` は環境変数に保存されている実際の API キーの名前です。今設定した環境変数はすぐに有効にならない場合があります。一般的に、コンピュータを再起動する必要があります。
 
@@ -61,14 +62,17 @@
     {
       "id": "deepseek-r1-no.002",
       "type": "ollama",
-      "model": "deepseek-r1"
+      "model": "deepseek-r1",
+      "host": "http://localhost:12345",
+      "customParams": "{\"think\": false}"
     },
     {
       "id": "WyCSP4M3CZluzoNgNCm2k",
       "type": "openai",
       "model": "qwen-max",
       "baseURL": "https://dashscope.aliyuncs.com/compatible-mode/v1",
-      "apiKey": "sk-********************************"
+      "apiKey": "sk-********************************",
+      "customParams": "{\"enable_thinking\": false}"
     },
     {
       "id": "uXPF7fCW2paRZcVyfjURO",

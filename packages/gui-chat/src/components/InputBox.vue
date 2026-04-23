@@ -5,9 +5,7 @@
       rows="1" :placeholder="$t('input.textarea')"
       ref="taInput" @keydown="handleKeydown"
     ></textarea>
-    <InputLower
-      :sendRequest = "sendRequest"
-    />
+    <InputLower :sendRequest = "sendRequest"/>
   </div>
 </template>
 
@@ -15,13 +13,19 @@
 import autosize from 'autosize'
 import { ref, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useListenerStore } from '@/stores/listener'
-import { useSenderStore } from '@/stores/sender'
+import { useAgentStore } from '@/stores/useAgentStore'
+import { useConfigStore } from '@/stores/useConfigStore'
+import { useDialogStore } from '@/stores/useDialogStore'
+import { requestSend } from '@/api/sender'
 import InputUpper from './input/InputUpper.vue'
 import InputLower from './input/InputLower.vue'
 
-const listenerStore = useListenerStore()
-const { sendDisable, sendShortcut, contextMap } = storeToRefs(listenerStore)
+const agentStore = useAgentStore()
+const configStore = useConfigStore()
+const dialogStore = useDialogStore()
+const { sendShortcut } = storeToRefs(configStore)
+const { contextMap } = storeToRefs(agentStore)
+const { canSendRequest } = storeToRefs(dialogStore)
 const taInput = ref<HTMLTextAreaElement>()
 
 function handleKeydown(e: KeyboardEvent) {
@@ -46,13 +50,13 @@ function processContext(): string {
 }
 
 function sendRequest() {
-  if(sendDisable.value){
+  if(!canSendRequest.value){
     return
   }
-  if(!sendDisable.value && taInput.value) {
+  if(canSendRequest.value && taInput.value) {
     const request = taInput.value.value;
     if (request.trim()) {
-      useSenderStore().requestSend(
+      requestSend(
         taInput.value.value,
         processContext()
       )
@@ -79,7 +83,7 @@ onMounted(() => {
 }
 
 .input-box:focus-within {
-  border: 1px solid var(--vscode-button-hoverBackground, #5a4579);
+  border: 1px solid var(--vscode-button-hoverBackground, #0258a8);
 }
 
 textarea {

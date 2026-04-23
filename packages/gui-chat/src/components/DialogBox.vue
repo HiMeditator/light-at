@@ -1,5 +1,5 @@
 <template>
-  <div class="dialog-box">
+  <div class="dialog-box" ref="scrollBox" @scroll="onScroll">
     <ModelDialog
       v-show="!dialogs.length && welcomeInfo"
       :dialog="welcomeDialog"
@@ -12,16 +12,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref,watch } from 'vue'
+import { ref, watch, nextTick } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import type { ModelDialogItem} from '@/types'
-import { useListenerStore } from '../stores/listener'
+import { useDialogStore } from '@/stores/useDialogStore'
+import { useConfigStore } from '@/stores/useConfigStore'
 import UserDialog from './dialog/UserDialog.vue'
 import ModelDialog from './dialog/ModelDialog.vue'
 
-const listenerStore = useListenerStore()
-const { dialogs, welcomeInfo } = storeToRefs(listenerStore)
+const configStore = useConfigStore()
+const dialogStore = useDialogStore()
+const { welcomeInfo } = storeToRefs(configStore)
+const { dialogs } = storeToRefs(dialogStore)
 
 const { t, locale } = useI18n()
 const welcomeDialog = ref<ModelDialogItem>({
@@ -47,13 +50,32 @@ watch(locale, () => {
     type: undefined,
     name: t('dialog.pluginName')
   }
-  // console.log(welcomeDialog.value.content)
 })
+
+const scrollBox = ref<HTMLElement>()
+let isAtBottom = true
+
+function onScroll() {
+  if (!scrollBox.value) return
+  const el = scrollBox.value
+  isAtBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 30
+}
+
+function scrollToBottom() {
+  if (isAtBottom && scrollBox.value) {
+    scrollBox.value.scrollTop = scrollBox.value.scrollHeight
+  }
+}
+
+watch(dialogs, () => {
+  nextTick(scrollToBottom)
+}, { deep: true })
 </script>
 
 <style scoped>
-.dailog-box {
-  overflow-y: auto;
+.dialog-box {
+  flex: 1;
+  overflow: auto;
   scrollbar-width: thin;
 }
 </style>

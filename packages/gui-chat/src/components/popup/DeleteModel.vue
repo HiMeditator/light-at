@@ -15,17 +15,17 @@
 </template>
 
 <script setup lang="ts">
-import type { Model } from '@/types'
-import { useSenderStore } from '@/stores/sender'
+import type { ModelItem } from '@/types'
+import { modelDelete } from '@/api/sender';
 
 const props = defineProps<{
-  deleteModel: Model | undefined,
+  deleteModel: ModelItem | undefined,
   popupDeleteModel: () => void
 }>();
 
 function confirm() {
   const modelID = props.deleteModel?.id || '';
-  useSenderStore().modelDelete(modelID)
+  modelDelete(modelID)
   props.popupDeleteModel()
 }
 

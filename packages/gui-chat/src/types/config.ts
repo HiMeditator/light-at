@@ -1,4 +1,4 @@
-export interface Model {
+export interface ModelItem {
     id: string;
     type: 'openai' | 'ollama' | 'openrouter';
     name: string;
@@ -12,4 +12,5 @@ export interface ModelConfig {
     host?: string;
     apiKey?: string;
     system?: string;
+    customParams?: string;
 }
