@@ -173,8 +173,8 @@ function getParmsExample() {
 }
 
 function submit(e: Event) {
-  e.preventDefault()
   if(!modelForm.value?.checkValidity()) return
+  e.preventDefault()
   if(!isParamsValid.value) {
     shakeParams.value = true
     return

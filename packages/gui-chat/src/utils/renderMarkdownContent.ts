@@ -5,11 +5,17 @@ import { faInfo, faClipboard, faCheck } from '@fortawesome/free-solid-svg-icons'
 
 const supportLanguges = hljs.listLanguages();
 
-export async function renderMarkdownContent(htmlNode: HTMLElement, content: string) {
+export async function renderMarkdownContent(htmlNode: HTMLElement, content: string, lightweight: boolean = false) {
     if(!content) return;
     const contentKaTeX = renderMathFormulas(content);
     const contentHTML = await marked.parse(contentKaTeX);
     htmlNode.innerHTML = contentHTML;
+    if (!lightweight) {
+        finalizeRendering(htmlNode);
+    }
+}
+
+export function finalizeRendering(htmlNode: HTMLElement) {
     htmlNode.querySelectorAll('pre code').forEach( (code) => {
         const pre = code.parentNode;
         if(pre?.querySelector('.code-info-div') === null){

@@ -38,13 +38,13 @@
         v-if="hasThinking"
       >
         <template v-if="showThinking">
-          <MarkdownContent :content="thinking" />
+          <MarkdownContent :content="thinking" :isStreaming="isStreaming" />
         </template>
         <template v-else>
           {{ thinking }}
         </template>
       </div>
-      <MarkdownContent :content="content" />
+      <MarkdownContent :content="content" :isStreaming="isStreaming" />
       <div class="div-tokens" v-if=" (dialog.prompt_tokens && dialog.completion_tokens)">
         <span :title="$t('dialog.prompt_tokens')">
           prompt_tokens: {{ dialog.prompt_tokens }}
@@ -67,10 +67,14 @@ import { faClipboard, faXmark, faCheck } from '@fortawesome/free-solid-svg-icons
 import type { ModelDialogItem } from '@/types'
 
 import { ref, watch } from 'vue'
+import { storeToRefs } from 'pinia'
 import MarkdownContent from './MarkdownContent.vue'
 import { dialogDelete } from '@/api/sender'
+import { useDialogStore } from '@/stores/useDialogStore'
 
 const props = defineProps<{ dialog: ModelDialogItem }>()
+const dialogStore = useDialogStore()
+const { isStreaming } = storeToRefs(dialogStore)
 const isCopied = ref(false);
 
 const hasThinking = ref(false)

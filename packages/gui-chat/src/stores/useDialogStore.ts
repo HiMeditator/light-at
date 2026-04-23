@@ -4,10 +4,12 @@ import type { DialogItem } from '@/types';
 
 export const useDialogStore = defineStore('dialog', () => {
     const canSendRequest = ref(true);
+    const isStreaming = ref(false);
     const dialogs = ref<DialogItem[]>([]);
 
     function responseNew(message: any){
         canSendRequest.value = false;
+        isStreaming.value = true;
         dialogs.value.push({
             id: message.requestID,
             content: '',
@@ -27,6 +29,7 @@ export const useDialogStore = defineStore('dialog', () => {
 
     function responseEnd(message: any){
         canSendRequest.value = true;
+        isStreaming.value = false;
         if(
             dialogs.value.length && 
             dialogs.value[dialogs.value.length - 1].id === message.requestID
@@ -42,6 +45,7 @@ export const useDialogStore = defineStore('dialog', () => {
 
     return {
         canSendRequest,
+        isStreaming,
         dialogs,
         responseNew,
         responseStream,

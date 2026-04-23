@@ -6,7 +6,7 @@ import { Configuration } from '../core/api/Configuration';
 import { MessageSender } from '../core/api/MessageSender';
 
 export async function ollamaChat() {
-    let ollama: Ollama;    
+    let ollama: Ollama;
     let inThinking = false;
     let content = '';
     let thinking = '';

@@ -4,21 +4,44 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue'
-import { renderMarkdownContent } from "@/utils/renderMarkdownContent";
-const props = defineProps<{ content: string }>()
+import { ref, watch, onMounted, onUnmounted } from 'vue'
+import { renderMarkdownContent, finalizeRendering } from "@/utils/renderMarkdownContent"
+const props = defineProps<{ content: string; isStreaming?: boolean }>()
 let renderNode = ref<HTMLElement>()
+let pendingContent: string | null = null
+let rafId: number | null = null
 
-onMounted(() => {
-  if(renderNode.value){
-    renderMarkdownContent(renderNode.value, props.content)
+function scheduleRender(content: string) {
+  pendingContent = content
+  if (rafId !== null) return
+  rafId = requestAnimationFrame(() => {
+    rafId = null
+    if (renderNode.value && pendingContent !== null) {
+      renderMarkdownContent(renderNode.value, pendingContent, props.isStreaming ?? false)
+      pendingContent = null
+    }
+  })
+}
+
+watch(() => props.isStreaming, (newVal, oldVal) => {
+  if (oldVal === true && newVal === false && renderNode.value) {
+    finalizeRendering(renderNode.value)
   }
 })
 
-watch(() => props.content, () => {
+onMounted(() => {
   if(renderNode.value){
-    // console.log('Render new content @',props.content)
-    renderMarkdownContent(renderNode.value, props.content)
+    renderMarkdownContent(renderNode.value, props.content, props.isStreaming ?? false)
+  }
+})
+
+watch(() => props.content, (newContent) => {
+  scheduleRender(newContent)
+})
+
+onUnmounted(() => {
+  if (rafId !== null) {
+    cancelAnimationFrame(rafId)
   }
 })
 </script>
