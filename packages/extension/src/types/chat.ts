@@ -4,6 +4,7 @@ export type Role = 'system' | 'user' | 'assistant'
 export interface ChatMessage {
     role: Role;
     content: string;
+    images?: string[];
 }
 
 export interface SessionItem {
@@ -12,6 +13,7 @@ export interface SessionItem {
     content: string;
     context?: string;
     contextList?: string;
+    images?: string[];
     time: string;
     name?: string;
     type?: ProviderType;

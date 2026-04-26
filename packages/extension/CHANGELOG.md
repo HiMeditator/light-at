@@ -94,3 +94,10 @@ The project has been refactored based on [light-assistant](https://github.com/Hi
 - 为“添加模型”页面新增表单说明文字
 - 优化模型流式输出的渲染效率
 - 在模型输出时自动滚动到最新内容
+
+## v0.5.0
+
+2026-04-26
+
+- 使用 Ollama 模型时支持使用图片作为上下文
+- 添加新项目 [Light Mate](https://github.com/HiMeditator/light-mate) 的链接

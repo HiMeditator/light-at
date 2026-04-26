@@ -54,6 +54,17 @@ export async function openaiChat(openrouter: boolean = false) {
         messages.push(SessionManager.chatMessages[SessionManager.chatMessages.length - 1]);
     }
 
+    let showImageWarning = false;
+    for(let i = 0; i < messages.length; i++) {
+        if('images' in messages[i]) {
+            delete messages[i].images;
+            if(!showImageWarning) {
+                vscode.window.showWarningMessage(l10n.t('ts.imageNotSupported'));
+                showImageWarning = true;
+            }
+        }
+    }
+
     MessageSender.responseNew(
         SessionManager.messageID, openrouter ? 'openrouter' : 'openai', 
         SessionManager.name
