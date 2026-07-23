@@ -1,4 +1,4 @@
-# Light At 用户手册
+# Light Chat 用户手册
 
 适用于插件版本 v0.4.0
 
@@ -45,7 +45,7 @@
 
 ```typescript
 const DEFAULT_SYSTEM_PROMPT = `
-You are Light At, an intelligent chat assistant integrated within the IDE.
+You are Light Chat, an intelligent chat assistant integrated within the IDE.
 
 You are required to answer any questions posed by the user. The following information may assist you in providing better responses:
 
@@ -140,11 +140,11 @@ Note that after the user's request, they may attach selected text snippets or co
 
 可点击插件界面右上角 `设置` 进入插件设置页面。
 
-- `Light At: Load Last Chat Session` 默认关闭，启用后，每次打开插件时，都会自动加载上次聊天记录。
-- `Light At: Use Default System Prompt` 默认开启，开启后若没有设置当前模型的自定义系统提示词，则使用插件的默认系统提示词。
-- `Light At: Continuous Chat` 默认开启，禁用后，每次发送消息后，模型只会接收当前请求内容，失去在同一个对话中的记忆能力。可以减少模型的输入 `tokens` 数量。
-- `Light At: Display Info Message` 默认开启，禁用后，新对话将不再显示欢迎消息。
-- `Light At: Display Tokens Usage` 默认开启，禁用后，不会显示在线模型的 `tokens` 使用情况。
-- `Light At: Max Chat History` 默认 $128$。设置聊天记录保存的最大数量。范围在 $-1~255$，其中 $-1$ 表示无限制。过多的聊天记录可能小幅度减慢插件的启动速度。
-- `Light At: Send Request Shortcut` 默认 `Ctrl+Enter`。设置发送请求的快捷键。在此情况下可以多行输入。选择 `Enter` 将不能换行，但可以粘贴带有换行的内容。
-- `Light At: Code Highlight Theme` 默认 `github`。设置聊天中代码高亮主题。前三个是亮色主题，后三个是暗色主题。切换后要重启插件才能生效。
+- `Light Chat: Load Last Chat Session` 默认关闭，启用后，每次打开插件时，都会自动加载上次聊天记录。
+- `Light Chat: Use Default System Prompt` 默认开启，开启后若没有设置当前模型的自定义系统提示词，则使用插件的默认系统提示词。
+- `Light Chat: Continuous Chat` 默认开启，禁用后，每次发送消息后，模型只会接收当前请求内容，失去在同一个对话中的记忆能力。可以减少模型的输入 `tokens` 数量。
+- `Light Chat: Display Info Message` 默认开启，禁用后，新对话将不再显示欢迎消息。
+- `Light Chat: Display Tokens Usage` 默认开启，禁用后，不会显示在线模型的 `tokens` 使用情况。
+- `Light Chat: Max Chat History` 默认 $128$。设置聊天记录保存的最大数量。范围在 $-1~255$，其中 $-1$ 表示无限制。过多的聊天记录可能小幅度减慢插件的启动速度。
+- `Light Chat: Send Request Shortcut` 默认 `Ctrl+Enter`。设置发送请求的快捷键。在此情况下可以多行输入。选择 `Enter` 将不能换行，但可以粘贴带有换行的内容。
+- `Light Chat: Code Highlight Theme` 默认 `github`。设置聊天中代码高亮主题。前三个是亮色主题，后三个是暗色主题。切换后要重启插件才能生效。

@@ -13,7 +13,7 @@ import { ollamaChat } from './ollamaChat';
 import { openaiChat } from './openaiChat';
 
 const DEFAULT_SYSTEM_PROMPT = `
-You are Light At, an intelligent chat assistant integrated within the IDE.
+You are Light Chat, an intelligent chat assistant integrated within the IDE.
 
 You are required to answer any questions posed by the user. The following information may assist you in providing better responses:
 

@@ -1,7 +1,7 @@
 <div align="center">
     <img src="assets/icons/light-at.png" width="90px" height="90px"/>
-    <h1 align="center">light-at</h1>
-    <p>Light At is a plugin for the VS Code-derived IDEs that provides only the purest in-IDE large model text chat functionality.</p>
+    <h1 align="center">Light Chat</h1>
+    <p>Light Chat is a plugin for the VS Code-derived IDEs that provides only the purest in-IDE large model text chat functionality.</p>
     <p>
       <a href="https://github.com/HiMeditator/light-at/releases"><img src="https://img.shields.io/badge/release-0.5.0-blue"></a>
       <a href="https://github.com/HiMeditator/light-at/issues"><img src="https://img.shields.io/github/issues/HiMeditator/light-at?color=orange"></a>
@@ -14,13 +14,6 @@
         | <a href="https://github.com/HiMeditator/light-at/blob/main/README_ja.md">日本語</a> |
     </p>
 </div>
-
-> This version is a long-term stable release and will no longer be actively updated. The new project based on this one: [Light Mate](https://github.com/HiMeditator/light-mate) .
->
-> <details>
-> <summary>Light Mate</summary>
-> <p><img src="assets/icons/light-mate.png" width="32px" height="32px"/> A lightweight LLM agent extension for VS Code, handling lightweight tasks with less token cost.</p>
-> </details>
 
 <hr>
 

@@ -1,7 +1,7 @@
 <div align="center">
     <img src="assets/icons/light-at.png" width="90px" height="90px"/>
-    <h1 align="center">light-at</h1>
-    <p>Light At は、VS Code 派生 IDE 向けのプラグインであり、最も純粋な IDE 内大規模モデルテキストチャット機能のみを提供します。</p>
+    <h1 align="center">Light Chat</h1>
+    <p>Light Chat は、VS Code 派生 IDE 向けのプラグインであり、最も純粋な IDE 内大規模モデルテキストチャット機能のみを提供します。</p>
     <p>
       <a href="https://github.com/HiMeditator/light-at/releases"><img src="https://img.shields.io/badge/release-0.5.0-blue"></a>
       <a href="https://github.com/HiMeditator/light-at/issues"><img src="https://img.shields.io/github/issues/HiMeditator/light-at?color=orange"></a>
@@ -14,13 +14,6 @@
         | <b>日本語</b> |
     </p>
 </div>
-
-> 本バージョンは長期安定版であり、今後積極的なアップデートは行われません。本プロジェクトをベースとした新プロジェクト：[Light Mate](https://github.com/HiMeditator/light-mate) 。
->
-> <details>
-> <summary>Light Mate</summary>
-> <p><img src="assets/icons/light-mate.png" width="32px" height="32px"/> VS Code向けの軽量な大規模言語モデルエージェントプラグイン。より少ないトークン消費量で軽量タスクを完了します。</p>
-> </details>
 
 <hr>
 

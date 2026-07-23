@@ -1,7 +1,7 @@
 <div align="center" >
     <img src="assets/icons/light-at.png" width="90px" height="90px"/>
-    <h1 align="center">light-at</h1>
-    <p>Light At 是一款适用于 VS Code 衍生 IDE 的插件，仅提供最纯粹的 IDE 内大模型文本聊天功能。</p>
+    <h1 align="center">Light Chat</h1>
+    <p>Light Chat 是一款适用于 VS Code 衍生 IDE 的插件，仅提供最纯粹的 IDE 内大模型文本聊天功能。</p>
     <p>
       <a href="https://github.com/HiMeditator/light-at/releases"><img src="https://img.shields.io/badge/release-0.5.0-blue"></a>
       <a href="https://github.com/HiMeditator/light-at/issues"><img src="https://img.shields.io/github/issues/HiMeditator/light-at?color=orange"></a>
@@ -14,13 +14,6 @@
         | <a href="https://github.com/HiMeditator/light-at/blob/main/README_ja.md">日本語</a> |
     </p>
 </div>
-
-> 该版本为长期稳定版本，将不再积极更新，基于该项目的新项目：[Light Mate](https://github.com/HiMeditator/light-mate) 。
->
-> <details>
-> <summary>Light Mate</summary>
-> <p><img src="assets/icons/light-mate.png" width="32px" height="32px"/> 面向 VS Code 的轻量级大模型智能体插件，用更小的 Token 消耗完成轻量级任务。</p>
-> </details>
 
 <hr>
 

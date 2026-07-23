@@ -30,12 +30,12 @@ export default {
         cancel: "Cancel"
     },
     dialog: {
-        pluginName: "Light At",
+        pluginName: "Light Chat",
         thinking: "thinking content",
         copy: "copy",
         delete: "delete",
         prompt_tokens: "Number of Tokens consumed by the input",
         completion_tokens: "Number of Tokens consumed by the output",
-        welcomeMessage: "{think}\n\nSome models (such as DeepSeek) may generate thinking content before answering questions. The generated thinking content can be viewed or hidden by clicking the \"thinking content\" option in the upper right corner.\n\n{_think}\n\nWelcome to Light At, an intelligent assistant plugin for VS Code. As a personally developed IDE assistant, Light At aims to provide you with a simple and personalized development assistance experience.\n\n- Flexible Model Configuration\n- Chat History Management\n- Mathematical Formula Rendering\n- Chat context selection\n\n---\n\nFor more information, please refer to [User Manual]({manual}) or visit the [GitHub page]({github}).\n"
+        welcomeMessage: "{think}\n\nSome models (such as DeepSeek) may generate thinking content before answering questions. The generated thinking content can be viewed or hidden by clicking the \"thinking content\" option in the upper right corner.\n\n{_think}\n\nWelcome to Light Chat, an intelligent assistant plugin for VS Code. As a personally developed IDE assistant, Light Chat aims to provide you with a simple and personalized development assistance experience.\n\n- Flexible Model Configuration\n- Chat History Management\n- Mathematical Formula Rendering\n- Chat context selection\n\n---\n\nFor more information, please refer to [User Manual]({manual}) or visit the [GitHub page]({github}).\n"
     }
 }

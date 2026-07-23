@@ -1,9 +1,9 @@
 {
   "name": "light-at",
-  "displayName": "Light At (Chat with LLMs)",
+  "displayName": "Light Chat (Chat with LLMs)",
   "publisher": "himeditator",
   "icon": "assets/icons/light-at.png",
-  "description": "Light At is an extension for the VS Code-derived IDEs that provides only the purest in-IDE large model text chat functionality.",
+  "description": "Light Chat is an extension for the VS Code-derived IDEs that provides only the purest in-IDE large model text chat functionality.",
   "version": "0.5.0",
   "repository": {
     "type": "git",
